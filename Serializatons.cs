@@ -1,0 +1,23 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Text.Json;
+using System.Threading.Tasks;
+
+namespace Projekt1
+{
+    public abstract class DataSerializer // this main class is resposible for Serialize
+    {
+        public abstract string Serialize(List<Myobject> entities, JsonSerializerOptions? options = null);
+    }
+
+    public class MyJsonSerializer : DataSerializer // deriviatives of DataSerializer class who define which type of serialize we want
+    {
+        public override string Serialize(List<Myobject> entities, JsonSerializerOptions? options = null)
+        {
+            return JsonSerializer.Serialize(entities, new JsonSerializerOptions { WriteIndented = true });
+
+        }
+    }
+}
