@@ -5,7 +5,7 @@ using System.Text;
 using System.Text.Json;
 using System.Threading.Tasks;
 
-namespace Projekt1
+namespace Projekt_PO
 {
     public abstract class DataSerializer // this main class is resposible for Serialize
     {

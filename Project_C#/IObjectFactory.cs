@@ -1,8 +1,10 @@
 ﻿using System.Text.Json;
 using System.Text.Json.Serialization;
 using System.Xml.Serialization;
+using Projekt_PO.ProjectObjects;
+using Projekt_PO.Factory;
 
-namespace Projekt1
+namespace Projekt_PO
 {
     [Serializable] // information that seralizations of My object class is possible
     // inofmations these types are derviatives of class, object will be marked after serialzation
