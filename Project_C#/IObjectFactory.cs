@@ -23,6 +23,7 @@ namespace Projekt_PO
     public interface IObjectFactory // interface which define a function creating the objects
     {
         Myobject CreateObject(params string[] data);
+        Myobject CreateObject(byte[] messageBytes);
     }
 
     public static class EntityFactory // class which helps us to select the appropriate constructor
@@ -38,6 +39,29 @@ namespace Projekt_PO
                 { "P", new PassengerFactory() },
                 { "PP", new PassengerPlaneFactory() },
                 { "FL", new FlightFactory() }
+            };
+
+            if (factoryMap.TryGetValue(firstElement, out IObjectFactory factory))
+            {
+                return factory; // it return facotry class where is constructor call about appropriate class
+            }
+            else
+            {
+                throw new ArgumentException($"Unsupported entity: {firstElement}");
+            }
+        }
+
+        public static IObjectFactory GetEntityFactory1(string firstElement)
+        {
+            Dictionary<string, IObjectFactory> factoryMap = new Dictionary<string, IObjectFactory>
+            {
+                { "NAI", new AirportFactory() },
+                { "NCP", new CargoPlaneFactory() },
+                { "NCA", new CargoFactory() },
+                { "NCR", new CrewFactory() },
+                { "NPA", new PassengerFactory() },
+                { "NPP", new PassengerPlaneFactory() },
+                { "NFL", new FlightFactory() }
             };
 
             if (factoryMap.TryGetValue(firstElement, out IObjectFactory factory))

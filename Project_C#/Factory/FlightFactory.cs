@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -36,6 +37,42 @@ namespace Projekt_PO.Factory
             }
 
             return new Flight(id, Origin, Target, TakeoffTime, LandingTime, Longitude, Latitude, AMSL, Plane_id, Crew_ids, Load_ids);
+        }
+        public Myobject CreateObject(byte[] messageBytes)
+        {
+            int FML = BitConverter.ToInt32(messageBytes, 3);
+            ulong ID = BitConverter.ToUInt64(messageBytes, 7);
+            ulong Origin = BitConverter.ToUInt64(messageBytes, 15);
+            ulong Target = BitConverter.ToUInt64(messageBytes, 23);
+            long takeoffEpoch = BitConverter.ToInt64(messageBytes,31);
+            long landingEpoch = BitConverter.ToInt64(messageBytes,39);
+            string TakeoffTime = DateTime.UnixEpoch.AddMilliseconds(takeoffEpoch).ToString(CultureInfo.InvariantCulture);
+            string LandingTime = DateTime.UnixEpoch.AddMilliseconds(landingEpoch).ToString(CultureInfo.InvariantCulture);
+            float Longitude = -1;
+            float Latitude = -1;
+            float AMSL = -1;
+            ulong Plane_id = BitConverter.ToUInt64(messageBytes, 47);
+            ushort CC = BitConverter.ToUInt16(messageBytes, 55);
+            ushort PCC = BitConverter.ToUInt16(messageBytes, 57+8*CC);
+
+            List<ulong> Crew_ids = new List<ulong>();
+            List<ulong> Load_ids = new List<ulong>();
+
+            for(int i = 0; i < 8;i++)
+            {
+                try
+                {
+                    ulong ID_crew = BitConverter.ToUInt64(messageBytes, 47 + i * 8);
+                    Crew_ids.Add(ID_crew);
+
+                    ulong ID_Load = BitConverter.ToUInt64(messageBytes, 59 + 8 * CC + i * 8);
+                    Crew_ids.Add(ID_Load);
+                }
+                catch { };
+            }
+
+
+            return new Flight(ID, Origin, Target, TakeoffTime, LandingTime, Longitude, Latitude, AMSL, Plane_id, Crew_ids, Load_ids);
         }
     }
 }
