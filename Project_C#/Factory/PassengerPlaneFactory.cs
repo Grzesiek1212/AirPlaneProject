@@ -30,7 +30,7 @@ namespace Projekt_PO.Factory
             string Country = Encoding.ASCII.GetString(messageBytes, 25, 3);
             ushort ML = BitConverter.ToUInt16(messageBytes, 28);
             string Model = Encoding.ASCII.GetString(messageBytes, 30, ML);
-            ushort FirstClassSize = BitConverter.ToUInt16(messageBytes, 30+ML);
+            ushort FirstClassSize = BitConverter.ToUInt16(messageBytes, 30 + ML);
             ushort BusinessClassSize = BitConverter.ToUInt16(messageBytes, 32 + ML);
             ushort EconomyClassSize = BitConverter.ToUInt16(messageBytes, 34 + ML);
 

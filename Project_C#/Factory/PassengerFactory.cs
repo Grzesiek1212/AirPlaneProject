@@ -32,7 +32,7 @@ namespace Projekt_PO.Factory
             ushort EL = BitConverter.ToUInt16(messageBytes, 31 + NL);
             string Email = Encoding.ASCII.GetString(messageBytes, 33 + NL, EL);
             string Class = Encoding.ASCII.GetString(messageBytes, 33 + NL + EL, 1);
-            ulong Miles = BitConverter.ToUInt64(messageBytes,34+NL+EL);
+            ulong Miles = BitConverter.ToUInt64(messageBytes, 34 + NL + EL);
 
             return new Passenger(ID, Name, Age, Phone, Email, Class, Miles);
         }

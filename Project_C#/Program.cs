@@ -30,8 +30,6 @@ namespace Projekt_PO
             // we create a source data service object and run the data source
             DataSourceService dataSourceService = new DataSourceService(source);
             dataSourceService.Start();
-
-            
             bool takeSnapshot = false; // this flag tells if the prgram do a Snapshot
             bool isRunning = true; // this flag tells us if the program is still running
 
@@ -62,5 +60,5 @@ namespace Projekt_PO
             Console.WriteLine("The app has been disabled.");
         }
 
-    }  
+    }
 }

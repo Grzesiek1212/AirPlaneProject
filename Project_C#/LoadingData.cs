@@ -28,9 +28,9 @@ namespace Projekt_PO
             }
             return entities;
         }
-        
+
     }
 
 
-    
+
 }

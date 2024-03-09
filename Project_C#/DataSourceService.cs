@@ -15,7 +15,7 @@ namespace Project_C_
         private NetworkSourceSimulator.NetworkSourceSimulator source;
         private List<Myobject> entities = new List<Myobject>();
 
-        
+
         public DataSourceService(NetworkSourceSimulator.NetworkSourceSimulator source) // Class Constructor
         {
             this.source = source;
@@ -26,7 +26,12 @@ namespace Project_C_
             source.OnNewDataReady += OnNewDataReadyHandler; //Subscription and event creation
 
             //creating a thread that will broadcast messages
-            Thread thread = new Thread(new ThreadStart(source.Run)) { IsBackground = true };
+            Thread thread = new Thread(new ThreadStart(source.Run))
+            {
+                // dies automatically when program exits
+                // https://learn.microsoft.com/en-us/dotnet/api/system.threading.thread.isbackground?view=net-8.0
+                IsBackground = true
+            };
 
             thread.Start(); // start the thread
         }
@@ -42,7 +47,7 @@ namespace Project_C_
             Message message = source.GetMessageAt(messageIndex);
 
             // we take a identificator of class
-            string firstElement = Encoding.ASCII.GetString(message.MessageBytes, 0, 3); 
+            string firstElement = Encoding.ASCII.GetString(message.MessageBytes, 0, 3);
 
             // we use our fuction to take a appropriate factory
             IObjectFactory factory = EntityFactory.GetEntityFactory1(firstElement);

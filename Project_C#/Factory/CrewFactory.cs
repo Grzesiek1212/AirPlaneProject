@@ -22,7 +22,7 @@ namespace Projekt_PO.Factory
 
             return new Crew(ID, Name, Age, Phone, Email, Practice, Role);
         }
-        public Myobject CreateObject(byte[] messageBytes) 
+        public Myobject CreateObject(byte[] messageBytes)
         {
             int FML = BitConverter.ToInt32(messageBytes, 3);
             ulong ID = BitConverter.ToUInt64(messageBytes, 7);
@@ -33,7 +33,7 @@ namespace Projekt_PO.Factory
             ushort EL = BitConverter.ToUInt16(messageBytes, 31 + NL);
             string Email = Encoding.ASCII.GetString(messageBytes, 33 + NL, EL);
             ushort Practice = BitConverter.ToUInt16(messageBytes, 33 + NL + EL);
-            string Role = Encoding.ASCII.GetString(messageBytes, 35 + NL + EL,1);
+            string Role = Encoding.ASCII.GetString(messageBytes, 35 + NL + EL, 1);
 
             return new Crew(ID, Name, Age, Phone, Email, Practice, Role);
         }
