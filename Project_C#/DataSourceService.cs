@@ -55,7 +55,6 @@ namespace Project_C_
             // there we create a object and we add it to our list
             Myobject entity = factory.CreateObject(message.MessageBytes);
             entities.Add(entity);
-
         }
 
         public void TakeSnapshot()  // Takes a snapshot of the collected entities and saves it to a JSON file.
