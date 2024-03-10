@@ -56,8 +56,6 @@ namespace Project_C_
             Myobject entity = factory.CreateObject(message.MessageBytes);
             entities.Add(entity);
 
-            Console.WriteLine($"Nowa wiadomość otrzymana, udało utowrzyć sie element {entity}");
-
         }
 
         public void TakeSnapshot()  // Takes a snapshot of the collected entities and saves it to a JSON file.
