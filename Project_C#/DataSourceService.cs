@@ -71,8 +71,6 @@ namespace Project_C_
             File.WriteAllText(snapshotFileName, json);
             Console.WriteLine($"Snapshot został zapisany do pliku: {snapshotFileName}");
 
-            // clear the list
-            entities.Clear();
         }
     }
 
