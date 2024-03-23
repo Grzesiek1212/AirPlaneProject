@@ -3,6 +3,7 @@ using System.Text.Json.Serialization;
 using System.Xml.Serialization;
 using Projekt_PO.ProjectObjects;
 using Projekt_PO.Factory;
+using Project_C_.ServerFactory;
 
 namespace Projekt_PO
 {
@@ -23,6 +24,10 @@ namespace Projekt_PO
     public interface IObjectFactory // interface which define a function creating the objects
     {
         Myobject CreateObject(params string[] data);
+    }
+
+    public interface IObjectServerFactory
+    {
         Myobject CreateObject(byte[] messageBytes);
     }
 
@@ -51,20 +56,20 @@ namespace Projekt_PO
             }
         }
 
-        public static IObjectFactory GetEntityFactory1(string firstElement)
+        public static IObjectServerFactory GetEntityFactory1(string firstElement)
         {
-            Dictionary<string, IObjectFactory> factoryMap = new Dictionary<string, IObjectFactory>
+            Dictionary<string, IObjectServerFactory> factoryMap = new Dictionary<string, IObjectServerFactory>
             {
-                { "NAI", new AirportFactory() },
-                { "NCP", new CargoPlaneFactory() },
-                { "NCA", new CargoFactory() },
-                { "NCR", new CrewFactory() },
-                { "NPA", new PassengerFactory() },
-                { "NPP", new PassengerPlaneFactory() },
-                { "NFL", new FlightFactory() }
+                { "NAI", new AirportServerFactory() },
+                { "NCP", new CargoPlaneServerFactory() },
+                { "NCA", new CargoServerFactory() },
+                { "NCR", new CrewServerFactory() },
+                { "NPA", new PassengerServerFactory() },
+                { "NPP", new PassengerPlaneServerFactory() },
+                { "NFL", new FlightServerFactory() }
             };
 
-            if (factoryMap.TryGetValue(firstElement, out IObjectFactory factory))
+            if (factoryMap.TryGetValue(firstElement, out IObjectServerFactory factory))
             {
                 return factory; // it return facotry class where is constructor call about appropriate class
             }

@@ -50,7 +50,7 @@ namespace Project_C_
             string firstElement = Encoding.ASCII.GetString(message.MessageBytes, 0, 3);
 
             // we use our fuction to take a appropriate factory
-            IObjectFactory factory = EntityFactory.GetEntityFactory1(firstElement);
+            IObjectServerFactory factory = EntityFactory.GetEntityFactory1(firstElement);
 
             // there we create a object and we add it to our list
             Myobject entity = factory.CreateObject(message.MessageBytes);
