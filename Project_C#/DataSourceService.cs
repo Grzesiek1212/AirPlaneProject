@@ -1,5 +1,6 @@
 ﻿using NetworkSourceSimulator;
 using Projekt_PO;
+using Projekt_PO.ProjectObjects;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -14,7 +15,7 @@ namespace Project_C_
     {
         private NetworkSourceSimulator.NetworkSourceSimulator source;
         private List<Myobject> entities = new List<Myobject>();
-
+        public AirportFlightLists airportFlightLists = new AirportFlightLists();
 
         public DataSourceService(NetworkSourceSimulator.NetworkSourceSimulator source) // Class Constructor
         {
@@ -53,7 +54,8 @@ namespace Project_C_
             IObjectServerFactory factory = EntityFactory.GetEntityFactory1(firstElement);
 
             // there we create a object and we add it to our list
-            Myobject entity = factory.CreateObject(message.MessageBytes);
+            Myobject entity = factory.CreateObject(message.MessageBytes, airportFlightLists);
+
             entities.Add(entity);
         }
 

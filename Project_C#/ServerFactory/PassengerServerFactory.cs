@@ -10,7 +10,7 @@ namespace Project_C_.ServerFactory
 {
     public class PassengerServerFactory: IObjectServerFactory
     {
-        public Myobject CreateObject(byte[] messageBytes)
+        public Myobject CreateObject(byte[] messageBytes, AirportFlightLists airportFlightLists)
         {
             int FML = BitConverter.ToInt32(messageBytes, 3);
             ulong ID = BitConverter.ToUInt64(messageBytes, 7);

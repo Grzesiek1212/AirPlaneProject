@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Projekt_PO.ProjectObjects
 {
-    internal class Flight : Myobject
+    public class Flight : Myobject
     {
         public ulong ID { get; set; }
         public ulong Origin { get; set; }

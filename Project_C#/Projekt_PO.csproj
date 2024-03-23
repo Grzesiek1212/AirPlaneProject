@@ -9,6 +9,13 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="FlightTrackerGUI" Version="1.0.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Reference Include="FlightTrackerGUI">
+      <HintPath>..\..\..\..\..\OneDrive\Pulpit\FlightTrackerGUI_dotnet8 (1)\net8.0\FlightTrackerGUI.dll</HintPath>
+    </Reference>
     <Reference Include="NetworkSourceSimulator">
       <HintPath>..\..\..\..\..\OneDrive\Pulpit\Includes\NetworkSourceSimulator.dll</HintPath>
     </Reference>

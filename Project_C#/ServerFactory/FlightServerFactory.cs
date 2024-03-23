@@ -11,7 +11,7 @@ namespace Project_C_.ServerFactory
 {
     public class FlightServerFactory: IObjectServerFactory
     {
-        public Myobject CreateObject(byte[] messageBytes)
+        public Myobject CreateObject(byte[] messageBytes, AirportFlightLists airportFlightLists)
         {
             int FML = BitConverter.ToInt32(messageBytes, 3);
             ulong ID = BitConverter.ToUInt64(messageBytes, 7);
@@ -19,8 +19,8 @@ namespace Project_C_.ServerFactory
             ulong Target = BitConverter.ToUInt64(messageBytes, 23);
             long takeoffEpoch = BitConverter.ToInt64(messageBytes, 31);
             long landingEpoch = BitConverter.ToInt64(messageBytes, 39);
-            string TakeoffTime = DateTime.UnixEpoch.AddMilliseconds(takeoffEpoch).ToString(CultureInfo.InvariantCulture);
-            string LandingTime = DateTime.UnixEpoch.AddMilliseconds(landingEpoch).ToString(CultureInfo.InvariantCulture);
+            string TakeoffTime = DateTime.UnixEpoch.AddMilliseconds(takeoffEpoch).ToString("HH:mm:ss", CultureInfo.InvariantCulture);
+            string LandingTime = DateTime.UnixEpoch.AddMilliseconds(landingEpoch).ToString("HH:mm:ss", CultureInfo.InvariantCulture);
             float Longitude = -1;
             float Latitude = -1;
             float AMSL = -1;
@@ -43,7 +43,10 @@ namespace Project_C_.ServerFactory
                 Load_ids.Add(ID_Load);
             }
 
-            return new Flight(ID, Origin, Target, TakeoffTime, LandingTime, Longitude, Latitude, AMSL, Plane_id, Crew_ids, Load_ids);
+            Flight flight = new Flight(ID, Origin, Target, TakeoffTime, LandingTime, Longitude, Latitude, AMSL, Plane_id, Crew_ids, Load_ids);
+            airportFlightLists.AddFlight(flight);
+
+            return flight;
         }
     }
 }

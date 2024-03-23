@@ -6,7 +6,7 @@ namespace Project_C_.ServerFactory
 {
     internal class AirportServerFactory : IObjectServerFactory
     {
-        public Myobject CreateObject(byte[] messageBytes)
+        public Myobject CreateObject(byte[] messageBytes, AirportFlightLists airportFlightLists)
         {
             int FML = BitConverter.ToInt32(messageBytes, 3);
             ulong ID = BitConverter.ToUInt64(messageBytes, 7);
@@ -18,7 +18,9 @@ namespace Project_C_.ServerFactory
             float AMSL = BitConverter.ToSingle(messageBytes, 28 + NL);
             string Country = Encoding.ASCII.GetString(messageBytes, 32 + NL, 3);
 
-            return new Airport(ID, Name, Code, Longitude, latitude, AMSL, Country);
+            Airport airport = new Airport(ID, Name, Code, Longitude, latitude, AMSL, Country);
+            airportFlightLists.AddAirport(airport);
+            return airport;
         }
     }
 }

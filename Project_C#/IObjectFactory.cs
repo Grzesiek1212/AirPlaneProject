@@ -4,6 +4,7 @@ using System.Xml.Serialization;
 using Projekt_PO.ProjectObjects;
 using Projekt_PO.Factory;
 using Project_C_.ServerFactory;
+using Project_C_;
 
 namespace Projekt_PO
 {
@@ -28,7 +29,7 @@ namespace Projekt_PO
 
     public interface IObjectServerFactory
     {
-        Myobject CreateObject(byte[] messageBytes);
+        Myobject CreateObject(byte[] messageBytes, AirportFlightLists airportFlightLists);
     }
 
     public static class EntityFactory // class which helps us to select the appropriate constructor
