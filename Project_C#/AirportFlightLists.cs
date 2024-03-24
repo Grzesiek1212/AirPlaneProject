@@ -4,68 +4,84 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Collections.Concurrent;
 
 namespace Project_C_
 {
     public class AirportFlightLists
     {
-        public List<Flight> flights;
-        public List<Airport> airports;
+        // Create the SINGLETON class which contains  two Dictionary 
+        // Dictionary calls flights contains all flights in our Data
+        // Dictionary calls airports contains all airports in our Data
+
+        private static readonly object padlock = new object();
+        private static AirportFlightLists instance = null;
+
+        public ConcurrentDictionary<ulong, Flight> flights;
+        public ConcurrentDictionary<ulong, Airport> airports;
 
         public AirportFlightLists()
         {
-            flights = new List<Flight>();
-            airports = new List<Airport>();
+            flights = new ConcurrentDictionary<ulong, Flight>();
+            airports = new ConcurrentDictionary<ulong, Airport>();
         }
-
-        public void AddFlight(Flight flight)
+        public static AirportFlightLists Instance
         {
-            lock (flights)
+            get
             {
-                if (flight != null)
+                lock (padlock)
                 {
-                    flights.Add(flight);
+                    if (instance == null)
+                    {
+                        instance = new AirportFlightLists();
+                    }
+                    return instance;
                 }
             }
         }
-
+        public void AddFlight(Flight flight)
+        {
+            lock (flights) // we must lock dictionary
+            {
+                flights.TryAdd(flight.ID,flight);
+            }
+        }
         public void RemoveFlight(Flight flight)
         {
-            if (flights.Contains(flight))
-                flights.Remove(flight);
+            lock (flights) // we must lock dictionary
+            {
+                flights.TryRemove(flight.ID, out _);
+            }
         }
-
         public void AddAirport(Airport airport)
         {
-            lock (airports)
+            lock (airports) // we must lock dictionary
             {
-                if (airport != null)
-                    airports.Add(airport);
+                airports.TryAdd(airport.ID, airport);
             }
         }
-
         public void RemoveAirport(Airport airport)
         {
-            if (airports.Contains(airport))
-                airports.Remove(airport);
+            lock (airports) // we must lock dictionary
+            {
+                airports.TryRemove(airport.ID, out _);
+            }
         }
-
-        public List<Flight> GetFlights()
+        public ConcurrentDictionary<ulong, Flight> GetFlights()
         {
+            // When we want get flights dictionary, we lock it and return the copy of it
             lock (flights)
             {
-                return flights;
+                return new ConcurrentDictionary<ulong, Flight>(flights);
             }
         }
-
-
-        public List<Airport> GetAirports()
+        public ConcurrentDictionary<ulong, Airport> GetAirports()
         {
+            // When we want get airports dictionary, we lock it and return the copy of it
             lock (airports)
             {
-                return airports;
+                return new ConcurrentDictionary<ulong, Airport>(airports);
             }
         }
-
     }
 }

@@ -44,7 +44,9 @@ namespace Project_C_.ServerFactory
             }
 
             Flight flight = new Flight(ID, Origin, Target, TakeoffTime, LandingTime, Longitude, Latitude, AMSL, Plane_id, Crew_ids, Load_ids);
+            
             airportFlightLists.AddFlight(flight);
+            
 
             return flight;
         }

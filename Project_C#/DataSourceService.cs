@@ -11,11 +11,11 @@ using static System.Runtime.InteropServices.JavaScript.JSType;
 namespace Project_C_
 {
     /// Represents a service responsible for handling data from a network source.
-    class DataSourceService
+    public class DataSourceService
     {
         private NetworkSourceSimulator.NetworkSourceSimulator source;
         private List<Myobject> entities = new List<Myobject>();
-        public AirportFlightLists airportFlightLists = new AirportFlightLists();
+        public AirportFlightLists airportFlightLists = AirportFlightLists.Instance;
 
         public DataSourceService(NetworkSourceSimulator.NetworkSourceSimulator source) // Class Constructor
         {
