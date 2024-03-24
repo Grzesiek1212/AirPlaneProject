@@ -43,7 +43,7 @@ namespace Project_C_
         {
             lock (flights) // we must lock dictionary
             {
-                flights.TryAdd(flight.ID,flight);
+                flights.TryAdd(flight.ID, flight);
             }
         }
         public void RemoveFlight(Flight flight)

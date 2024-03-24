@@ -28,7 +28,7 @@ namespace Project_C_
                 UpdateActualFlightsList(dataSourceService, currentTime, actualflights);
 
                 // GUI actualization
-                UpdateGUI(dataSourceService, actualflights, flightsGUI, flightsGUIData,currentTime);
+                UpdateGUI(dataSourceService, actualflights, flightsGUI, flightsGUIData, currentTime);
 
                 Thread.Sleep(1);
             }

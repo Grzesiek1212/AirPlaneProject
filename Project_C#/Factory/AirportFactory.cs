@@ -21,6 +21,6 @@ namespace Projekt_PO.Factory
 
             return new Airport(Id, Name, code, Longitude, latitude, AMSL, Country);
         }
-     
+
     }
 }

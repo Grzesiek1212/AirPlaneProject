@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace Project_C_.ServerFactory
 {
-    public class FlightServerFactory: IObjectServerFactory
+    public class FlightServerFactory : IObjectServerFactory
     {
         public Myobject CreateObject(byte[] messageBytes, AirportFlightLists airportFlightLists)
         {
@@ -44,9 +44,8 @@ namespace Project_C_.ServerFactory
             }
 
             Flight flight = new Flight(ID, Origin, Target, TakeoffTime, LandingTime, Longitude, Latitude, AMSL, Plane_id, Crew_ids, Load_ids);
-            
+
             airportFlightLists.AddFlight(flight);
-            
 
             return flight;
         }

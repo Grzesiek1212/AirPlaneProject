@@ -44,7 +44,7 @@ namespace Projekt_PO
             apka.Start();
             Thread mapViewThread = new Thread(() => FlightsVisualization.MapView(dataSourceService));
             mapViewThread.Start();
-        
+
 
 
             bool takeSnapshot = false; // this flag tells if the prgram do a Snapshot

@@ -22,6 +22,6 @@ namespace Projekt_PO.Factory
 
             return new Crew(ID, Name, Age, Phone, Email, Practice, Role);
         }
-        
+
     }
 }

@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace Project_C_.ServerFactory
 {
-    public class PassengerServerFactory: IObjectServerFactory
+    public class PassengerServerFactory : IObjectServerFactory
     {
         public Myobject CreateObject(byte[] messageBytes, AirportFlightLists airportFlightLists)
         {
