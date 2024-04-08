@@ -77,7 +77,7 @@ namespace Project_C_
 
         }
 
-        public void GenerateMediaList()
+        public void GenerateMediaList() // function which generate media list
         {
             medias.Add(new Televison("Telewizja Abelowa"));
             medias.Add(new Televison("Kanał TV-tensor"));
@@ -90,10 +90,14 @@ namespace Project_C_
 
         }
 
-        public void TakeReport()
+        public void TakeReport() // function which make a report
         {
+            // Construct the newsGenerator object
             Newsgenerator newsgenerator = new Newsgenerator(medias,airportFlightLists.objects);
+            
             string news;
+
+            // generate a new message until it is possible
             while ((news = newsgenerator.GenerateNextNews()) != null)
             {
                 Console.WriteLine(news);

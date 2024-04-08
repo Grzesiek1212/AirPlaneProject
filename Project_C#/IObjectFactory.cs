@@ -22,7 +22,7 @@ namespace Projekt_PO
     {
     }
 
-    public abstract class MyMedia: IMediaVisitor // Main class, derivatives of this class are Airport,Cargo e.t.c
+    public abstract class MyMedia: IMediaVisitor // Main class, derivatives of this class are Television, Radio etc.
     {
         public string Name;
 

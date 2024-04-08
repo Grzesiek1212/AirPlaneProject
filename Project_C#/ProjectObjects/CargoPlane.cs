@@ -23,7 +23,7 @@ namespace Projekt_PO.ProjectObjects
             this.Model = Model;
             this.MaxLoad = MaxLoad;
         }
-
+        // Accept function to create a suitable message
         public string Accept(IMediaVisitor visitor)
         {
             return visitor.VisitCargoPlane(this);

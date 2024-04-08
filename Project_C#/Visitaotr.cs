@@ -9,12 +9,14 @@ using Projekt_PO.ProjectObjects;
 
 namespace Project_C_
 {
-
+    // Make a vistor interface to implement message of some object
     public interface IReportable
     {
         public string Accept(IMediaVisitor visitor);
     }
 
+
+    // interafce that define the visit methods
     public interface IMediaVisitor
     {    
     string VisitAirport(Airport airport);

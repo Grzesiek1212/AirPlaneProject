@@ -106,13 +106,11 @@ namespace Project_C_
 
         public List<IReportable> GetIreportableObject()
         {
-            lock(objects)
+            // When we want get airports dictionary, we lock it and return the copy of it
+            lock (objects)
             {
                 return new List<IReportable>(objects);
             }
         }
-
-
-
     }
 }

@@ -47,11 +47,11 @@ namespace Projekt_PO
 
 
 
-            bool takeSnapshot = false; // this flag tells if the prgram do a Snapshot
+            bool takeSnapshot = false; // this flag tells if the program do a Snapshot
             bool isRunning = true; // this flag tells us if the program is still running
-            bool takereport = false;
+            bool takereport = false; // this flag tells us if the program do a report
 
-            dataSourceService.GenerateMediaList();
+            dataSourceService.GenerateMediaList(); // Generate a media List
 
             // A loop that listens for commands entered through the console
             while (isRunning)
@@ -61,7 +61,7 @@ namespace Projekt_PO
                 switch (input)
                 {
                     case "report":
-                        takereport = true;
+                        takereport = true; // Set a report flag
                         break;
                     case "print":
                         takeSnapshot = true; // Set snapshot flag
@@ -81,7 +81,7 @@ namespace Projekt_PO
                 if(takereport)
                 {
                     dataSourceService.TakeReport();
-                    takereport = false;
+                    takereport = false; // Reset report flag
                 }
             }
 

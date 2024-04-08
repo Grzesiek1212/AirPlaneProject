@@ -28,6 +28,7 @@ namespace Projekt_PO.ProjectObjects
             this.Country = Country;
         }
 
+        // Accept function to create a suitable message
         public string Accept(IMediaVisitor visitor)
         {
             return visitor.VisitAirport(this);
