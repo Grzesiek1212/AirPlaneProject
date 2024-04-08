@@ -78,7 +78,7 @@ namespace Projekt_PO
                     dataSourceService.TakeSnapshot();
                     takeSnapshot = false; // Reset snapshot flag
                 }
-                if(takereport)
+                if (takereport)
                 {
                     dataSourceService.TakeReport();
                     takereport = false; // Reset report flag

@@ -93,15 +93,15 @@ namespace Project_C_
         public void TakeReport() // function which make a report
         {
             // Construct the newsGenerator object
-            Newsgenerator newsgenerator = new Newsgenerator(medias,airportFlightLists.objects);
-            
+            Newsgenerator newsgenerator = new Newsgenerator(medias, airportFlightLists.objects);
+
             string news;
 
             // generate a new message until it is possible
             while ((news = newsgenerator.GenerateNextNews()) != null)
             {
                 Console.WriteLine(news);
-            }        
+            }
         }
     }
 

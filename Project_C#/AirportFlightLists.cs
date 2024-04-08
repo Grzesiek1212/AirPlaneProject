@@ -26,7 +26,7 @@ namespace Project_C_
         {
             flights = new ConcurrentDictionary<ulong, Flight>();
             airports = new ConcurrentDictionary<ulong, Airport>();
-            objects = new List <IReportable>();
+            objects = new List<IReportable>();
         }
         public static AirportFlightLists Instance
         {
