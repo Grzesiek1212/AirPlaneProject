@@ -20,7 +20,10 @@ namespace Project_C_.ServerFactory
             string Model = Encoding.ASCII.GetString(messageBytes, 30, ML);
             float MaxLoad = BitConverter.ToSingle(messageBytes, 30 + ML);
 
-            return new CargoPlane(id, Serial, Country, Model, MaxLoad);
+            CargoPlane plane = new CargoPlane(id, Serial, Country, Model, MaxLoad);
+            airportFlightLists.AddIreportableObject(plane);
+
+            return plane;
         }
     }
 }

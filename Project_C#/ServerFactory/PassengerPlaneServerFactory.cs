@@ -22,7 +22,9 @@ namespace Project_C_.ServerFactory
             ushort BusinessClassSize = BitConverter.ToUInt16(messageBytes, 32 + ML);
             ushort EconomyClassSize = BitConverter.ToUInt16(messageBytes, 34 + ML);
 
-            return new PassengerPlane(id, Serial, Country, Model, FirstClassSize, BusinessClassSize, EconomyClassSize);
+            PassengerPlane plane = new PassengerPlane(id, Serial, Country, Model, FirstClassSize, BusinessClassSize, EconomyClassSize);
+            airportFlightLists.AddIreportableObject(plane);
+            return plane;
         }
     }
 }

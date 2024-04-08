@@ -1,4 +1,5 @@
 ﻿using NetworkSourceSimulator;
+using Project_C_.Community;
 using Projekt_PO;
 using Projekt_PO.ProjectObjects;
 using System;
@@ -16,6 +17,7 @@ namespace Project_C_
         private NetworkSourceSimulator.NetworkSourceSimulator source;
         private List<Myobject> entities = new List<Myobject>();
         public AirportFlightLists airportFlightLists = AirportFlightLists.Instance;
+        public List<MyMedia> medias = new List<MyMedia>();
 
         public DataSourceService(NetworkSourceSimulator.NetworkSourceSimulator source) // Class Constructor
         {
@@ -73,6 +75,29 @@ namespace Project_C_
             File.WriteAllText(snapshotFileName, json);
             Console.WriteLine($"Snapshot został zapisany do pliku: {snapshotFileName}");
 
+        }
+
+        public void GenerateMediaList()
+        {
+            medias.Add(new Televison("Telewizja Abelowa"));
+            medias.Add(new Televison("Kanał TV-tensor"));
+
+            medias.Add(new Radio("Radio Kwantyfikator"));
+            medias.Add(new Radio(" Radio Shmem"));
+
+            medias.Add(new Newspaper("Gazeta Kategoryczna"));
+            medias.Add(new Newspaper("Dziennik Politechniczny"));
+
+        }
+
+        public void TakeReport()
+        {
+            Newsgenerator newsgenerator = new Newsgenerator(medias,airportFlightLists.objects);
+            string news;
+            while ((news = newsgenerator.GenerateNextNews()) != null)
+            {
+                Console.WriteLine(news);
+            }        
         }
     }
 

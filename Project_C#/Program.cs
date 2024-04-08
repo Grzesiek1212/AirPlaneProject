@@ -49,13 +49,20 @@ namespace Projekt_PO
 
             bool takeSnapshot = false; // this flag tells if the prgram do a Snapshot
             bool isRunning = true; // this flag tells us if the program is still running
+            bool takereport = false;
+
+            dataSourceService.GenerateMediaList();
+
             // A loop that listens for commands entered through the console
             while (isRunning)
             {
-                Console.WriteLine("Type 'print' to take a snapshot, 'exit' to exit.");
+                Console.WriteLine("Type 'print' to take a snapshot,'report' to take a media report, 'exit' to exit.");
                 string input = Console.ReadLine();
                 switch (input)
                 {
+                    case "report":
+                        takereport = true;
+                        break;
                     case "print":
                         takeSnapshot = true; // Set snapshot flag
                         break;
@@ -70,6 +77,11 @@ namespace Projekt_PO
                 {
                     dataSourceService.TakeSnapshot();
                     takeSnapshot = false; // Reset snapshot flag
+                }
+                if(takereport)
+                {
+                    dataSourceService.TakeReport();
+                    takereport = false;
                 }
             }
 

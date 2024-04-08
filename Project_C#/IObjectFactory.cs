@@ -22,6 +22,18 @@ namespace Projekt_PO
     {
     }
 
+    public abstract class MyMedia: IMediaVisitor // Main class, derivatives of this class are Airport,Cargo e.t.c
+    {
+        public string Name;
+
+        public MyMedia(string Name) {
+            this.Name = Name;
+        }
+        public abstract string VisitAirport(Airport airport);
+        public abstract string VisitCargoPlane(CargoPlane plane);
+        public abstract string VisitPassengerPlane(PassengerPlane plane);
+    }
+
     public interface IObjectFactory // interface which define a function creating the objects
     {
         Myobject CreateObject(params string[] data);

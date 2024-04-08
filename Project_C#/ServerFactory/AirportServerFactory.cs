@@ -20,6 +20,7 @@ namespace Project_C_.ServerFactory
 
             Airport airport = new Airport(ID, Name, Code, Longitude, latitude, AMSL, Country);
             airportFlightLists.AddAirport(airport);
+            airportFlightLists.AddIreportableObject(airport);
             return airport;
         }
     }

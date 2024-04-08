@@ -3,10 +3,11 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Project_C_;
 
 namespace Projekt_PO.ProjectObjects
 {
-    public class Airport : Myobject
+    public class Airport : Myobject, IReportable
     {
         public ulong ID { get; set; }
         public string Name { get; set; }
@@ -25,6 +26,11 @@ namespace Projekt_PO.ProjectObjects
             this.Longitude = Longitude;
             this.AMSL = AMSL;
             this.Country = Country;
+        }
+
+        public string Accept(IMediaVisitor visitor)
+        {
+            return visitor.VisitAirport(this);
         }
 
     }

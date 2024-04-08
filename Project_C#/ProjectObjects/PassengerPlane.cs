@@ -3,10 +3,11 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Project_C_;
 
 namespace Projekt_PO.ProjectObjects
 {
-    internal class PassengerPlane : Myobject
+    public class PassengerPlane : Myobject, IReportable
     {
         public ulong ID { get; set; }
         public string Serial { get; set; }
@@ -25,6 +26,11 @@ namespace Projekt_PO.ProjectObjects
             this.FirstClassSize = FirstClassSize;
             this.BusinessClassSize = BusinessClassSize;
             this.EconomyClassSize = EconomyClassSize;
+        }
+
+        public string Accept(IMediaVisitor visitor)
+        {
+            return visitor.VisitPassengerPlane(this);
         }
     }
 }
