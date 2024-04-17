@@ -15,8 +15,10 @@ namespace Project_C_.ServerFactory
         {
             int FML = BitConverter.ToInt32(messageBytes, 3);
             ulong ID = BitConverter.ToUInt64(messageBytes, 7);
-            ulong Origin = BitConverter.ToUInt64(messageBytes, 15);
-            ulong Target = BitConverter.ToUInt64(messageBytes, 23);
+            ulong OriginID = BitConverter.ToUInt64(messageBytes, 15);
+            ulong TargetID = BitConverter.ToUInt64(messageBytes, 23);
+            Airport Origin = airportFlightLists.GetAirport(OriginID);
+            Airport Target = airportFlightLists.GetAirport(TargetID);
             long takeoffEpoch = BitConverter.ToInt64(messageBytes, 31);
             long landingEpoch = BitConverter.ToInt64(messageBytes, 39);
             string TakeoffTime = DateTime.UnixEpoch.AddMilliseconds(takeoffEpoch).ToString("HH:mm:ss", CultureInfo.InvariantCulture);

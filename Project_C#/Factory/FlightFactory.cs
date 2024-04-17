@@ -4,6 +4,7 @@ using System.Globalization;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Project_C_;
 using Projekt_PO.ProjectObjects;
 
 namespace Projekt_PO.Factory
@@ -12,9 +13,12 @@ namespace Projekt_PO.Factory
     {
         public Myobject CreateObject(params string[] data)
         {
+            AirportFlightLists airportFlightLists = new AirportFlightLists();
             ulong id = ulong.Parse(data[1]);
-            ulong Origin = ulong.Parse(data[2]);
-            ulong Target = ulong.Parse(data[3]);
+            ulong OriginID = ulong.Parse(data[2]);
+            ulong TargetID = ulong.Parse(data[3]);
+            Airport Origin = airportFlightLists.GetAirport(OriginID);
+            Airport Target = airportFlightLists.GetAirport(TargetID);
             string TakeoffTime = data[4];
             string LandingTime = data[5];
             float Longitude = float.Parse(data[6], System.Globalization.CultureInfo.InvariantCulture);

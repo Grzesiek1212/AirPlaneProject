@@ -65,8 +65,8 @@ namespace Project_C_
             foreach (Flight flight in actualflights)
             {
                 // Find the origin airport and target airport of the flight we to consider
-                airports.TryGetValue(flight.Origin, out Airport originAirport);
-                airports.TryGetValue(flight.Target, out Airport targetAirport);
+                Airport originAirport = flight.Origin;
+                Airport targetAirport = flight.Target;
 
                 // Calculate the ratation of the plane in the flight
                 double mapCoordRotation = CalculateCoordRotation(originAirport, targetAirport);

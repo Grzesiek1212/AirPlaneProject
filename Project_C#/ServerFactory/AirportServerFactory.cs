@@ -18,6 +18,7 @@ namespace Project_C_.ServerFactory
             float AMSL = BitConverter.ToSingle(messageBytes, 28 + NL);
             string Country = Encoding.ASCII.GetString(messageBytes, 32 + NL, 3);
 
+
             Airport airport = new Airport(ID, Name, Code, Longitude, latitude, AMSL, Country);
             airportFlightLists.AddAirport(airport);
             airportFlightLists.AddIreportableObject(airport);

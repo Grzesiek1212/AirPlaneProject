@@ -112,5 +112,11 @@ namespace Project_C_
                 return new List<IReportable>(objects);
             }
         }
+
+        public Airport GetAirport(ulong id)
+        {
+            airports.TryGetValue(id, out Airport airport);
+            return airport;
+        }
     }
 }
