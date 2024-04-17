@@ -10,7 +10,7 @@ namespace Project_C_.ServerFactory
 {
     public class CargoPlaneServerFactory : IObjectServerFactory
     {
-        public Myobject CreateObject(byte[] messageBytes, AirportFlightLists airportFlightLists)
+        public Myobject CreateObject(byte[] messageBytes)
         {
             int FML = BitConverter.ToInt32(messageBytes, 3);
             ulong id = BitConverter.ToUInt64(messageBytes, 7);
@@ -20,6 +20,7 @@ namespace Project_C_.ServerFactory
             string Model = Encoding.ASCII.GetString(messageBytes, 30, ML);
             float MaxLoad = BitConverter.ToSingle(messageBytes, 30 + ML);
 
+            AirportFlightLists airportFlightLists = AirportFlightLists.Instance;
             CargoPlane plane = new CargoPlane(id, Serial, Country, Model, MaxLoad);
             airportFlightLists.AddIreportableObject(plane);
 

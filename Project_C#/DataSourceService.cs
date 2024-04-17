@@ -56,7 +56,7 @@ namespace Project_C_
             IObjectServerFactory factory = EntityFactory.GetEntityFactory1(firstElement);
 
             // there we create a object and we add it to our list
-            Myobject entity = factory.CreateObject(message.MessageBytes, airportFlightLists);
+            Myobject entity = factory.CreateObject(message.MessageBytes);
 
             entities.Add(entity);
         }

@@ -11,8 +11,9 @@ namespace Project_C_.ServerFactory
 {
     public class FlightServerFactory : IObjectServerFactory
     {
-        public Myobject CreateObject(byte[] messageBytes, AirportFlightLists airportFlightLists)
+        public Myobject CreateObject(byte[] messageBytes)
         {
+            AirportFlightLists airportFlightLists = AirportFlightLists.Instance;
             int FML = BitConverter.ToInt32(messageBytes, 3);
             ulong ID = BitConverter.ToUInt64(messageBytes, 7);
             ulong OriginID = BitConverter.ToUInt64(messageBytes, 15);

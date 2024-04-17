@@ -10,7 +10,7 @@ namespace Project_C_.ServerFactory
 {
     public class PassengerPlaneServerFactory : IObjectServerFactory
     {
-        public Myobject CreateObject(byte[] messageBytes, AirportFlightLists airportFlightLists)
+        public Myobject CreateObject(byte[] messageBytes)
         {
             int FML = BitConverter.ToInt32(messageBytes, 3);
             ulong id = BitConverter.ToUInt64(messageBytes, 7);
@@ -22,6 +22,7 @@ namespace Project_C_.ServerFactory
             ushort BusinessClassSize = BitConverter.ToUInt16(messageBytes, 32 + ML);
             ushort EconomyClassSize = BitConverter.ToUInt16(messageBytes, 34 + ML);
 
+            AirportFlightLists airportFlightLists = AirportFlightLists.Instance;
             PassengerPlane plane = new PassengerPlane(id, Serial, Country, Model, FirstClassSize, BusinessClassSize, EconomyClassSize);
             airportFlightLists.AddIreportableObject(plane);
             return plane;

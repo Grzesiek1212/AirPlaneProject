@@ -42,7 +42,7 @@ namespace Projekt_PO
 
     public interface IObjectServerFactory
     {
-        Myobject CreateObject(byte[] messageBytes, AirportFlightLists airportFlightLists);
+        Myobject CreateObject(byte[] messageBytes);
     }
 
     public static class EntityFactory // class which helps us to select the appropriate constructor

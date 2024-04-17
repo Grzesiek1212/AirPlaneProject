@@ -6,7 +6,7 @@ namespace Project_C_.ServerFactory
 {
     internal class AirportServerFactory : IObjectServerFactory
     {
-        public Myobject CreateObject(byte[] messageBytes, AirportFlightLists airportFlightLists)
+        public Myobject CreateObject(byte[] messageBytes)
         {
             int FML = BitConverter.ToInt32(messageBytes, 3);
             ulong ID = BitConverter.ToUInt64(messageBytes, 7);
@@ -18,7 +18,7 @@ namespace Project_C_.ServerFactory
             float AMSL = BitConverter.ToSingle(messageBytes, 28 + NL);
             string Country = Encoding.ASCII.GetString(messageBytes, 32 + NL, 3);
 
-
+            AirportFlightLists airportFlightLists = AirportFlightLists.Instance;
             Airport airport = new Airport(ID, Name, Code, Longitude, latitude, AMSL, Country);
             airportFlightLists.AddAirport(airport);
             airportFlightLists.AddIreportableObject(airport);
