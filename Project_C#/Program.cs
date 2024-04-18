@@ -18,6 +18,7 @@ using Mapsui;
 using System.Drawing;
 using System.Collections;
 using System.Collections.Concurrent;
+using Avalonia.Controls.ApplicationLifetimes;
 
 namespace Projekt_PO
 {
@@ -28,6 +29,7 @@ namespace Projekt_PO
             // we create a Data Source Object
             string currentDirectory = Directory.GetCurrentDirectory();
             string filePath = Path.Combine(currentDirectory, "example_data.ftr");
+            bool isRunning = true; // this flag tells us if the program is still running
 
             int minTime = 1; // in milliseconds
             int maxTime = 5; // in milliseconds
@@ -42,13 +44,12 @@ namespace Projekt_PO
 
             Thread apka = new Thread(new ThreadStart(Runner.Run));
             apka.Start();
-            Thread mapViewThread = new Thread(() => FlightsVisualization.MapView(dataSourceService));
+            Thread mapViewThread = new Thread(() => FlightsVisualization.MapView(dataSourceService, ref isRunning)) { IsBackground = true};
             mapViewThread.Start();
 
 
 
             bool takeSnapshot = false; // this flag tells if the program do a Snapshot
-            bool isRunning = true; // this flag tells us if the program is still running
             bool takereport = false; // this flag tells us if the program do a report
 
             dataSourceService.GenerateMediaList(); // Generate a media List
@@ -68,8 +69,10 @@ namespace Projekt_PO
                         break;
                     case "exit":
                         isRunning = false;
+                        mapViewThread.Join();
                         break;
                     default:
+
                         Console.WriteLine("Invalid command.");
                         break;
                 }

@@ -12,14 +12,14 @@ namespace Project_C_
 {
     public class FlightsVisualization
     {
-        public static void MapView(DataSourceService dataSourceService)
+        public static void MapView(DataSourceService dataSourceService, ref bool isRunning)
         {
             FlightsGUIData flightsGUIData = new FlightsGUIData();
             List<FlightGUI> flightsGUI = new List<FlightGUI>();
             List<Flight> actualflights = new List<Flight>();
             double currentTime;
 
-            while (true)
+            while (isRunning)
             {
                 // Take current Time in seconds, we do not take into account days, months and years in this simulation
                 currentTime = (DateTime.Now - DateTime.Now.Date).TotalSeconds;
@@ -32,7 +32,9 @@ namespace Project_C_
 
                 Thread.Sleep(1);
             }
+            
         }
+
         private static void UpdateActualFlightsList(DataSourceService dataSourceService, double currentTime, List<Flight> actualflights)
         {
             // Go for copy of Dictionary of all flights in data 
