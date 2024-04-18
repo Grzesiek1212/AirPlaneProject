@@ -6,6 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Collections.Concurrent;
 using Projekt_PO;
+using Project_C_.ServerFactory;
 
 namespace Project_C_
 {
@@ -20,12 +21,15 @@ namespace Project_C_
 
         public ConcurrentDictionary<ulong, Flight> flights;
         public ConcurrentDictionary<ulong, Airport> airports;
+        public ConcurrentDictionary<ulong, Plane> planes;
         public List<IReportable> objects;
 
         public AirportFlightLists()
         {
             flights = new ConcurrentDictionary<ulong, Flight>();
             airports = new ConcurrentDictionary<ulong, Airport>();
+            planes = new ConcurrentDictionary<ulong, Plane>();
+            
             objects = new List<IReportable>();
         }
         public static AirportFlightLists Instance
@@ -64,6 +68,14 @@ namespace Project_C_
             }
         }
 
+        public void AddPlane(Plane plane)
+        {
+            lock (planes)
+            {
+                planes.TryAdd(plane.ID, plane);
+            }
+        }
+
         public void AddIreportableObject(IReportable myobject)
         {
             lock (objects) // we must lock list
@@ -85,6 +97,14 @@ namespace Project_C_
             lock (airports) // we must lock dictionary
             {
                 airports.TryRemove(airport.ID, out _);
+            }
+        }
+
+        public void RemovePlane(Plane plane)
+        {
+            lock (planes)
+            {
+                planes.TryRemove(plane.ID, out _);
             }
         }
         public ConcurrentDictionary<ulong, Flight> GetFlights()
@@ -117,6 +137,12 @@ namespace Project_C_
         {
             airports.TryGetValue(id, out Airport airport);
             return airport;
+        }
+
+        public Plane GetPlane(ulong id)
+        {
+            planes.TryGetValue(id, out Plane plane);
+            return plane;
         }
     }
 }

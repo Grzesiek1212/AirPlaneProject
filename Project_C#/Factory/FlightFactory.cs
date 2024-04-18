@@ -25,6 +25,7 @@ namespace Projekt_PO.Factory
             float Latitude = float.Parse(data[7], System.Globalization.CultureInfo.InvariantCulture);
             float AMSL = float.Parse(data[8], System.Globalization.CultureInfo.InvariantCulture);
             ulong Plane_id = ulong.Parse(data[9]);
+            Plane plane = airportFlightLists.GetPlane(Plane_id);
 
             string[] values_crew_ids = data[10].Trim('[', ']').Split(';');
             string[] values_load_ids = data[11].Trim('[', ']').Split(';');
@@ -40,7 +41,7 @@ namespace Projekt_PO.Factory
                 Load_ids.Add(ulong.Parse(values_load_ids[i]));
             }
 
-            return new Flight(id, Origin, Target, TakeoffTime, LandingTime, Longitude, Latitude, AMSL, Plane_id, Crew_ids, Load_ids);
+            return new Flight(id, Origin, Target, TakeoffTime, LandingTime, Longitude, Latitude, AMSL, plane, Crew_ids, Load_ids);
         }
     }
 }

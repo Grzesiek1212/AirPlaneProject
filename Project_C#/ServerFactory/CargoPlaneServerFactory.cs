@@ -23,6 +23,7 @@ namespace Project_C_.ServerFactory
             AirportFlightLists airportFlightLists = AirportFlightLists.Instance;
             CargoPlane plane = new CargoPlane(id, Serial, Country, Model, MaxLoad);
             airportFlightLists.AddIreportableObject(plane);
+            airportFlightLists.AddPlane(plane);
 
             return plane;
         }

@@ -16,11 +16,11 @@ namespace Projekt_PO.ProjectObjects
         public float Longitude { get; set; }
         public float Latitude { get; set; }
         public float AMSL { get; set; }
-        public ulong Plane_id { get; set; }
+        public Plane Plane { get; set; }
         public List<ulong> Crew_ids { get; set; }
         public List<ulong> Load_ids { get; set; }
 
-        public Flight(ulong ID, Airport Origin, Airport Target, string TakeoffTime, string LandingTime, float Longitude, float Latitude, float AMSL, ulong Plane_id, List<ulong> Crew_ids, List<ulong> Load_ids)
+        public Flight(ulong ID, Airport Origin, Airport Target, string TakeoffTime, string LandingTime, float Longitude, float Latitude, float AMSL, Plane Plane, List<ulong> Crew_ids, List<ulong> Load_ids)
         {
             this.ID = ID;
             this.Origin = Origin;
@@ -30,7 +30,7 @@ namespace Projekt_PO.ProjectObjects
             this.Longitude = Longitude;
             this.Latitude = Latitude;
             this.AMSL = AMSL;
-            this.Plane_id = Plane_id;
+            this.Plane = Plane;
             this.Crew_ids = Crew_ids;
             this.Load_ids = Load_ids;
         }

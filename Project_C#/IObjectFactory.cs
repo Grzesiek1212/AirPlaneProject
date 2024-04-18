@@ -22,6 +22,13 @@ namespace Projekt_PO
     {
     }
 
+    public abstract class Plane:Myobject {
+        public ulong ID { get; set; }
+        public string? Serial { get; set; }
+        public string? Country { get; set; }
+        public string? Model { get; set; }
+    };
+
     public abstract class MyMedia : IMediaVisitor // Main class, derivatives of this class are Television, Radio etc.
     {
         public string Name;

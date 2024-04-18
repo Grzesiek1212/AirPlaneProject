@@ -25,6 +25,8 @@ namespace Project_C_.ServerFactory
             AirportFlightLists airportFlightLists = AirportFlightLists.Instance;
             PassengerPlane plane = new PassengerPlane(id, Serial, Country, Model, FirstClassSize, BusinessClassSize, EconomyClassSize);
             airportFlightLists.AddIreportableObject(plane);
+            airportFlightLists.AddPlane(plane);
+
             return plane;
         }
     }

@@ -28,6 +28,7 @@ namespace Project_C_.ServerFactory
             float Latitude = -1;
             float AMSL = -1;
             ulong Plane_id = BitConverter.ToUInt64(messageBytes, 47);
+            Plane plane = airportFlightLists.GetPlane(Plane_id);
             ushort CC = BitConverter.ToUInt16(messageBytes, 55);
             ushort PCC = BitConverter.ToUInt16(messageBytes, 57 + 8 * CC);
 
@@ -46,7 +47,7 @@ namespace Project_C_.ServerFactory
                 Load_ids.Add(ID_Load);
             }
 
-            Flight flight = new Flight(ID, Origin, Target, TakeoffTime, LandingTime, Longitude, Latitude, AMSL, Plane_id, Crew_ids, Load_ids);
+            Flight flight = new Flight(ID, Origin, Target, TakeoffTime, LandingTime, Longitude, Latitude, AMSL, plane, Crew_ids, Load_ids);
 
             airportFlightLists.AddFlight(flight);
 

@@ -7,12 +7,8 @@ using Project_C_;
 
 namespace Projekt_PO.ProjectObjects
 {
-    public class PassengerPlane : Myobject, IReportable
+    public class PassengerPlane : Plane, IReportable
     {
-        public ulong ID { get; set; }
-        public string Serial { get; set; }
-        public string Country { get; set; }
-        public string Model { get; set; }
         public ushort FirstClassSize { get; set; }
         public ushort BusinessClassSize { get; set; }
         public ushort EconomyClassSize { get; set; }
