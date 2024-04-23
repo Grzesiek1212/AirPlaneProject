@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Project_C_;
 using Projekt_PO.ProjectObjects;
 
 namespace Projekt_PO.Factory
@@ -19,8 +20,12 @@ namespace Projekt_PO.Factory
             ushort BusinessClassSize = ushort.Parse(data[6]);
             ushort EconomyClassSize = ushort.Parse(data[7]);
 
-            return new PassengerPlane(id, Serial, Country, Model, FirstClassSize, BusinessClassSize, EconomyClassSize);
+            AirportFlightLists airportFlightLists = AirportFlightLists.Instance;
+            PassengerPlane plane = new PassengerPlane(id, Serial, Country, Model, FirstClassSize, BusinessClassSize, EconomyClassSize);
+            airportFlightLists.AddIreportableObject(plane);
+            airportFlightLists.AddPlane(plane);
 
+            return plane;
         }
     }
 }

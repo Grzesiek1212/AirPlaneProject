@@ -71,7 +71,7 @@ namespace Project_C_
                 Airport targetAirport = flight.Target;
 
                 // Calculate the ratation of the plane in the flight
-                double mapCoordRotation = CalculateCoordRotation(originAirport, targetAirport);
+                double mapCoordRotation = CalculateCoordRotation(targetAirport, flight);
 
                 // Update the plane localization
                 UpgradePosition(flight, originAirport, targetAirport, currentTime);
@@ -87,10 +87,10 @@ namespace Project_C_
             flightsGUIData.UpdateFlights(flightsGUI);
             Runner.UpdateGUI(flightsGUIData);
         }
-        private static double CalculateCoordRotation(Airport originAirport, Airport targetAirport)
+        private static double CalculateCoordRotation(Airport targetAirport, Flight flight)
         {
             // Convert the longitude and latitude of the origin airport to X,Y coordinates on the map
-            (double x_start, double y_start) = SphericalMercator.FromLonLat(originAirport.Longitude, originAirport.Latitude);
+            (double x_start, double y_start) = SphericalMercator.FromLonLat(flight.LongitudeStart, flight.LatitudeStart);
 
             // Convert the longitude and latitude of the target airport to X,Y coordinates on the map
             (double x_end, double y_end) = SphericalMercator.FromLonLat(targetAirport.Longitude, targetAirport.Latitude);
@@ -117,17 +117,16 @@ namespace Project_C_
             // Calculate the time difference between departure and arrival
             double totalFlightTime = endSec - startSec;
             double elapsedFlightTime = currentTime - startSec;
-
-            // Calculate the progress of the flight based on elapsed time
-            double progress = elapsedFlightTime / totalFlightTime;
-
+            double timeleft = endSec - currentTime;
             // Calculate the distance of whole filght
-            float distance_x = targetAirport.Longitude - originAirport.Longitude;
-            float distance_y = targetAirport.Latitude - originAirport.Latitude;
+            
+            
+            double latitudeC = (flight.LatitudeStart * timeleft + targetAirport.Latitude * elapsedFlightTime) / totalFlightTime;
+            double LongtitudeC = (flight.LongitudeStart * timeleft + targetAirport.Longitude * elapsedFlightTime)/totalFlightTime;
 
             // Update the localization of the plane
-            flight.Latitude = (float)(originAirport.Latitude + progress * distance_y);
-            flight.Longitude = (float)(originAirport.Longitude + progress * distance_x);
+            flight.Latitude = (float)(latitudeC);
+            flight.Longitude = (float)(LongtitudeC);
         }
         public static FlightGUI ConvertFlightToFlightGUI(Flight flight, double MapcoordRotation)
         {

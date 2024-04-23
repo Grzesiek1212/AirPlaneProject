@@ -8,7 +8,6 @@ namespace Projekt_PO.ProjectObjects
 {
     internal class Cargo : Myobject
     {
-        public ulong ID { get; set; }
         public float Weight { get; set; }
         public string Code { get; set; }
         public string Description { get; set; }

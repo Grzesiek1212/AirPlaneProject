@@ -6,13 +6,10 @@ using System.Threading.Tasks;
 
 namespace Projekt_PO.ProjectObjects
 {
-    internal class Passenger : Myobject
+    internal class Passenger : Human
     {
-        public ulong ID { get; set; }
         public string Name { get; set; }
         public ulong Age { get; set; }
-        public string Phone { get; set; }
-        public string Email { get; set; }
         public string Class { get; set; }
         public ulong Miles { get; set; }
 

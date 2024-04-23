@@ -13,8 +13,8 @@ namespace Projekt_PO.Factory
     {
         public Myobject CreateObject(params string[] data)
         {
-            AirportFlightLists airportFlightLists = new AirportFlightLists();
-            ulong id = ulong.Parse(data[1]);
+            AirportFlightLists airportFlightLists = AirportFlightLists.Instance;
+            ulong ID = ulong.Parse(data[1]);
             ulong OriginID = ulong.Parse(data[2]);
             ulong TargetID = ulong.Parse(data[3]);
             Airport Origin = airportFlightLists.GetAirport(OriginID);
@@ -41,7 +41,11 @@ namespace Projekt_PO.Factory
                 Load_ids.Add(ulong.Parse(values_load_ids[i]));
             }
 
-            return new Flight(id, Origin, Target, TakeoffTime, LandingTime, Longitude, Latitude, AMSL, plane, Crew_ids, Load_ids);
+            Flight flight = new Flight(ID, Origin, Target, TakeoffTime, LandingTime, Longitude, Latitude,Origin.Longitude,Origin.Latitude, AMSL, plane, Crew_ids, Load_ids);
+
+            airportFlightLists.AddFlight(flight);
+
+            return flight;
         }
     }
 }

@@ -15,18 +15,24 @@ namespace Project_C_
     public class DataSourceService
     {
         private NetworkSourceSimulator.NetworkSourceSimulator source;
-        private List<Myobject> entities = new List<Myobject>();
+        public List<Myobject> entities = new List<Myobject>();
         public AirportFlightLists airportFlightLists = AirportFlightLists.Instance;
         public List<MyMedia> medias = new List<MyMedia>();
+        public event IDUpdate OnIDUpdate;
+        public event PositionUpdate OnPositionUpdate;
+        public event ContactInfoUpdate OnContactInfoUpdate;
+
 
         public DataSourceService(NetworkSourceSimulator.NetworkSourceSimulator source) // Class Constructor
         {
             this.source = source;
+            this.source.OnIDUpdate += HandleIDUpdate;
+            this.source.OnPositionUpdate += HandlePositionUpdate;
+            this.source.OnContactInfoUpdate += HandleContactInfoUpdate;
         }
 
         public void Start() // function that start our program
         {
-            source.OnNewDataReady += OnNewDataReadyHandler; //Subscription and event creation
 
             //creating a thread that will broadcast messages
             Thread thread = new Thread(new ThreadStart(source.Run))
@@ -44,6 +50,51 @@ namespace Project_C_
             ProcessNewData(args.MessageIndex);
         }
 
+        private void HandleIDUpdate(object sender, IDUpdateArgs args)
+        {
+            foreach (var entity in entities)
+            {
+                if (entity.ID == args.ObjectID)
+                {
+                    entity.ID = args.NewObjectID;
+                    // Loguj zmianę ID do pliku
+                    break;
+                }
+            }
+        }
+
+        private void HandlePositionUpdate(object sender, PositionUpdateArgs args)
+        {
+            int delayMilliseconds = 200;
+            Task.Delay(delayMilliseconds).Wait();
+            foreach (var entity in airportFlightLists.flights)
+            {
+                if (entity.Value.ID == args.ObjectID)
+                {
+                    entity.Value.Longitude = args.Longitude;
+                    entity.Value.Latitude = args.Latitude;
+                    entity.Value.AMSL = args.AMSL;
+                    entity.Value.LatitudeStart = args.Latitude;
+                    entity.Value.LongitudeStart = args.Longitude;
+                    // Loguj zmianę pozycji do pliku
+                    break;
+                }
+            }
+        }
+
+        private void HandleContactInfoUpdate(object sender, ContactInfoUpdateArgs args)
+        {
+            foreach (var entity in airportFlightLists.people)
+            {
+                if (entity.Value.ID == args.ObjectID)
+                {
+                    entity.Value.Phone = args.PhoneNumber;
+                    entity.Value.Email = args.EmailAddress;
+                    // Loguj zmianę danych kontaktowych do pliku
+                    break;
+                }
+            }
+        }
         private void ProcessNewData(int messageIndex)
         {
             // we recive a information

@@ -4,6 +4,7 @@ using System.Linq;
 using System.Numerics;
 using System.Text;
 using System.Threading.Tasks;
+using Project_C_;
 using Projekt_PO.ProjectObjects;
 
 namespace Projekt_PO.Factory
@@ -20,7 +21,10 @@ namespace Projekt_PO.Factory
             ushort Practice = ushort.Parse(data[6]);
             string Role = data[7];
 
-            return new Crew(ID, Name, Age, Phone, Email, Practice, Role);
+            AirportFlightLists airportFlightLists = AirportFlightLists.Instance;
+            Crew crew = new Crew(ID, Name, Age, Phone, Email, Practice, Role);
+            airportFlightLists.AddHuman(crew);
+            return crew;
         }
 
     }

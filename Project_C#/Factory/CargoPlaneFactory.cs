@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Project_C_;
 using Projekt_PO.ProjectObjects;
 
 namespace Projekt_PO.Factory
@@ -17,7 +18,12 @@ namespace Projekt_PO.Factory
             string Model = data[4];
             float MaxLoad = float.Parse(data[5], System.Globalization.CultureInfo.InvariantCulture);
 
-            return new CargoPlane(id, Serial, Country, Model, MaxLoad);
+            AirportFlightLists airportFlightLists = AirportFlightLists.Instance;
+            CargoPlane plane = new CargoPlane(id, Serial, Country, Model, MaxLoad);
+            airportFlightLists.AddIreportableObject(plane);
+            airportFlightLists.AddPlane(plane);
+
+            return plane;
         }
     }
 

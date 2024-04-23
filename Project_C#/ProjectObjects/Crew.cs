@@ -7,13 +7,10 @@ using System.Threading.Tasks;
 
 namespace Projekt_PO.ProjectObjects
 {
-    internal class Crew : Myobject
+    internal class Crew : Human
     {
-        public ulong ID { get; set; }
         public string Name { get; set; }
         public ulong Age { get; set; }
-        public string Phone { get; set; }
-        public string Email { get; set; }
         public ushort Practice { get; set; }
         public string Role { get; set; }
 

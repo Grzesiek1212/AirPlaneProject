@@ -29,17 +29,23 @@ namespace Projekt_PO
             // we create a Data Source Object
             string currentDirectory = Directory.GetCurrentDirectory();
             string filePath = Path.Combine(currentDirectory, "example_data.ftr");
+            string[] lines = File.ReadAllLines(filePath);
             bool isRunning = true; // this flag tells us if the program is still running
+            List<Myobject> objects = new List<Myobject>();
+            objects = LoadingData.DataProcesor(lines);
+
+            string filePath1 = Path.Combine(currentDirectory, "example.ftre");
+
 
             int minTime = 1; // in milliseconds
-            int maxTime = 2; // in milliseconds
+            int maxTime = 5; // in milliseconds
 
             // create the server simulator
-            NetworkSourceSimulator.NetworkSourceSimulator source = new NetworkSourceSimulator.NetworkSourceSimulator(filePath, minTime, maxTime);
+            NetworkSourceSimulator.NetworkSourceSimulator source = new NetworkSourceSimulator.NetworkSourceSimulator(filePath1, minTime, maxTime);
 
             // we create a source data service object and run the data source
             DataSourceService dataSourceService = new DataSourceService(source);
-            dataSourceService.Start();
+            dataSourceService.entities = objects;
 
 
             Thread apka = new Thread(new ThreadStart(Runner.Run));
@@ -47,10 +53,9 @@ namespace Projekt_PO
             Thread mapViewThread = new Thread(() => FlightsVisualization.MapView(dataSourceService, ref isRunning)) { IsBackground = true};
             mapViewThread.Start();
 
-
-
-            bool takeSnapshot = false; // this flag tells if the program do a Snapshot
-            bool takereport = false; // this flag tells us if the program do a report
+            int delayMilliseconds = 2000;
+            Task.Delay(delayMilliseconds).Wait();
+            dataSourceService.Start();
 
             dataSourceService.GenerateMediaList(); // Generate a media List
 

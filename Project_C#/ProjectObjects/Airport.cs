@@ -9,7 +9,6 @@ namespace Projekt_PO.ProjectObjects
 {
     public class Airport : Myobject, IReportable
     {
-        public ulong ID { get; set; }
         public string Name { get; set; }
         public string Code { get; set; }
         public float Longitude { get; set; }

@@ -23,7 +23,10 @@ namespace Project_C_.ServerFactory
             ushort Practice = BitConverter.ToUInt16(messageBytes, 33 + NL + EL);
             string Role = Encoding.ASCII.GetString(messageBytes, 35 + NL + EL, 1);
 
-            return new Crew(ID, Name, Age, Phone, Email, Practice, Role);
+            AirportFlightLists airportFlightLists = AirportFlightLists.Instance;
+            Crew crew = new Crew(ID, Name, Age, Phone, Email, Practice, Role);
+            airportFlightLists.AddHuman(crew);
+            return crew;
         }
     }
 }

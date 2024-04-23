@@ -22,6 +22,7 @@ namespace Project_C_
         public ConcurrentDictionary<ulong, Flight> flights;
         public ConcurrentDictionary<ulong, Airport> airports;
         public ConcurrentDictionary<ulong, Plane> planes;
+        public ConcurrentDictionary<ulong, Human> people;
         public List<IReportable> objects;
 
         public AirportFlightLists()
@@ -29,7 +30,7 @@ namespace Project_C_
             flights = new ConcurrentDictionary<ulong, Flight>();
             airports = new ConcurrentDictionary<ulong, Airport>();
             planes = new ConcurrentDictionary<ulong, Plane>();
-            
+            people = new ConcurrentDictionary<ulong, Human>();
             objects = new List<IReportable>();
         }
         public static AirportFlightLists Instance
@@ -65,6 +66,13 @@ namespace Project_C_
             lock (airports) // we must lock dictionary
             {
                 airports.TryAdd(airport.ID, airport);
+            }
+        }
+
+        public void AddHuman(Human human)
+        {
+            lock(people) { 
+                people.TryAdd(human.ID, human);
             }
         }
 
@@ -143,6 +151,12 @@ namespace Project_C_
         {
             planes.TryGetValue(id, out Plane plane);
             return plane;
+        }
+
+        public Flight GetFlight(ulong id)
+        {
+            flights.TryGetValue(id, out Flight flight);
+            return flight;
         }
     }
 }
