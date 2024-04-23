@@ -32,7 +32,7 @@ namespace Projekt_PO
             bool isRunning = true; // this flag tells us if the program is still running
 
             int minTime = 1; // in milliseconds
-            int maxTime = 5; // in milliseconds
+            int maxTime = 2; // in milliseconds
 
             // create the server simulator
             NetworkSourceSimulator.NetworkSourceSimulator source = new NetworkSourceSimulator.NetworkSourceSimulator(filePath, minTime, maxTime);
@@ -62,29 +62,18 @@ namespace Projekt_PO
                 switch (input)
                 {
                     case "report":
-                        takereport = true; // Set a report flag
+                        dataSourceService.TakeReport();
                         break;
                     case "print":
-                        takeSnapshot = true; // Set snapshot flag
+                        dataSourceService.TakeSnapshot();
                         break;
                     case "exit":
                         isRunning = false;
                         mapViewThread.Join();
                         break;
                     default:
-
                         Console.WriteLine("Invalid command.");
                         break;
-                }
-                if (takeSnapshot)
-                {
-                    dataSourceService.TakeSnapshot();
-                    takeSnapshot = false; // Reset snapshot flag
-                }
-                if (takereport)
-                {
-                    dataSourceService.TakeReport();
-                    takereport = false; // Reset report flag
                 }
             }
 
