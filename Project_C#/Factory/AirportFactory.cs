@@ -20,7 +20,7 @@ namespace Projekt_PO.Factory
             float AMSL = float.Parse(data[6], System.Globalization.CultureInfo.InvariantCulture);
             string Country = data[7];
 
-            AirportFlightLists airportFlightLists = AirportFlightLists.Instance;
+            AirportFlightLists airportFlightLists = AirportFlightLists.Instance; // there we use this singleton to add this object
             Airport airport = new Airport(ID, Name, Code, Longitude, latitude, AMSL, Country);
             airportFlightLists.AddAirport(airport);
             airportFlightLists.AddIreportableObject(airport);

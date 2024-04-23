@@ -49,21 +49,21 @@ namespace Project_C_
         }
         public void AddFlight(Flight flight)
         {
-            lock (flights) // we must lock dictionary
+            lock (flights) // We must lock dictionary
             {
                 flights.TryAdd(flight.ID, flight);
             }
         }
         public void RemoveFlight(Flight flight)
         {
-            lock (flights) // we must lock dictionary
+            lock (flights) // We must lock dictionary
             {
                 flights.TryRemove(flight.ID, out _);
             }
         }
         public void AddAirport(Airport airport)
         {
-            lock (airports) // we must lock dictionary
+            lock (airports) // We must lock dictionary
             {
                 airports.TryAdd(airport.ID, airport);
             }
@@ -71,14 +71,15 @@ namespace Project_C_
 
         public void AddHuman(Human human)
         {
-            lock(people) { 
+            lock (people) // We must lock dictionary
+            {
                 people.TryAdd(human.ID, human);
             }
         }
 
         public void AddPlane(Plane plane)
         {
-            lock (planes)
+            lock (planes) // We must lock dictionary
             {
                 planes.TryAdd(plane.ID, plane);
             }
@@ -86,7 +87,7 @@ namespace Project_C_
 
         public void AddIreportableObject(IReportable myobject)
         {
-            lock (objects) // we must lock list
+            lock (objects) // We must lock list
             {
                 objects.Add(myobject);
             }
@@ -94,7 +95,7 @@ namespace Project_C_
 
         public void removeIreportableObject(IReportable myobject)
         {
-            lock (objects) // we must lock list
+            lock (objects) // We must lock list
             {
                 objects.Remove(myobject);
             }
@@ -110,7 +111,7 @@ namespace Project_C_
 
         public void RemovePlane(Plane plane)
         {
-            lock (planes)
+            lock (planes) // we must lock dictionary
             {
                 planes.TryRemove(plane.ID, out _);
             }

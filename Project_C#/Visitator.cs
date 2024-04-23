@@ -16,7 +16,7 @@ namespace Project_C_
     }
 
 
-    // interafce that define the visit methods
+    // Interafce that define the visit methods
     public interface IMediaVisitor
     {
         string VisitAirport(Airport airport);

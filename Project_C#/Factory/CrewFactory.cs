@@ -21,7 +21,7 @@ namespace Projekt_PO.Factory
             ushort Practice = ushort.Parse(data[6]);
             string Role = data[7];
 
-            AirportFlightLists airportFlightLists = AirportFlightLists.Instance;
+            AirportFlightLists airportFlightLists = AirportFlightLists.Instance; // There we use this singleton to add this object
             Crew crew = new Crew(ID, Name, Age, Phone, Email, Practice, Role);
             airportFlightLists.AddHuman(crew);
             return crew;

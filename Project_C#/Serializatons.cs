@@ -8,12 +8,12 @@ using System.Threading.Tasks;
 
 namespace Projekt_PO
 {
-    public abstract class DataSerializer // this main class is resposible for Serialize
+    public abstract class DataSerializer // This main class is resposible for Serialize
     {
         public abstract string Serialize(List<Myobject> entities, JsonSerializerOptions? options = null);
     }
 
-    public class MyJsonSerializer : DataSerializer // deriviatives of DataSerializer class who define which type of serialize we want
+    public class MyJsonSerializer : DataSerializer // Deriviatives of DataSerializer class who define which type of serialize we want
     {
         public override string Serialize(List<Myobject> entities, JsonSerializerOptions? options = null)
         {

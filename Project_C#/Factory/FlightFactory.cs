@@ -13,7 +13,7 @@ namespace Projekt_PO.Factory
     {
         public Myobject CreateObject(params string[] data)
         {
-            AirportFlightLists airportFlightLists = AirportFlightLists.Instance;
+            AirportFlightLists airportFlightLists = AirportFlightLists.Instance; // There we use this singleton to add this object and find references
             ulong ID = ulong.Parse(data[1]);
             ulong OriginID = ulong.Parse(data[2]);
             ulong TargetID = ulong.Parse(data[3]);
@@ -41,7 +41,7 @@ namespace Projekt_PO.Factory
                 Load_ids.Add(ulong.Parse(values_load_ids[i]));
             }
 
-            Flight flight = new Flight(ID, Origin, Target, TakeoffTime, LandingTime, Longitude, Latitude,Origin.Longitude,Origin.Latitude, AMSL, plane, Crew_ids, Load_ids);
+            Flight flight = new Flight(ID, Origin, Target, TakeoffTime, LandingTime, Longitude, Latitude, Origin.Longitude, Origin.Latitude, AMSL, plane, Crew_ids, Load_ids);
 
             airportFlightLists.AddFlight(flight);
 

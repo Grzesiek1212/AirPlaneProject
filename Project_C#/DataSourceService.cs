@@ -31,20 +31,20 @@ namespace Project_C_
             this.source.OnPositionUpdate += HandlePositionUpdate;
             this.source.OnContactInfoUpdate += HandleContactInfoUpdate;
             this.logFilePath = logFilePath;
+            LogToFile("Opening Applications"); // In the log file inform about staring write logs
         }
 
-        public void Start() // function that start our program
+        public void Start() // Function that start our program
         {
-
-            //creating a thread that will broadcast messages
+            // Creating a thread that will broadcast messages
             Thread thread = new Thread(new ThreadStart(source.Run))
             {
-                // dies automatically when program exits
+                // Dies automatically when program exits
                 // https://learn.microsoft.com/en-us/dotnet/api/system.threading.thread.isbackground?view=net-8.0
                 IsBackground = true
             };
 
-            thread.Start(); // start the thread
+            thread.Start(); // Start the thread
         }
 
         private void OnNewDataReadyHandler(object sender, NewDataReadyArgs args) // Event Handler Method
@@ -52,61 +52,91 @@ namespace Project_C_
             ProcessNewData(args.MessageIndex);
         }
 
-        private void HandleIDUpdate(object sender, IDUpdateArgs args)
+        private void HandleIDUpdate(object sender, IDUpdateArgs args) // Event Handler Method
         {
             foreach (var entity in entities)
             {
                 if (entity.ID == args.ObjectID)
                 {
-                    foreach(var entity2 in entities)
+                    // We must check that is there any object with the ID for what we want ot change
+                    foreach (var entity2 in entities)
                     {
-                        if(entity2.ID == args.NewObjectID)
+                        if (entity2.ID == args.NewObjectID)
                         {
                             LogToFile($" ERROR - Obkiet o ID: {args.ObjectID} już istnieje");
                             return;
                         }
                     }
+
+                    // We write the log to the file and change
                     entity.ID = args.NewObjectID;
                     LogToFile($"Zaktualizowano ID obiektu: {args.ObjectID} -> {args.NewObjectID}");
                     return;
                 }
             }
+
+            // If we don't find the object with this id we write the error log
             LogToFile($" ERROR - Nie znaleziono obiektu (ID: {args.ObjectID})");
         }
 
-        private void HandlePositionUpdate(object sender, PositionUpdateArgs args)
+        private void HandlePositionUpdate(object sender, PositionUpdateArgs args) // Event Handler Method
         {
             int delayMilliseconds = 200;
             Task.Delay(delayMilliseconds).Wait();
+
             foreach (var entity in airportFlightLists.flights)
             {
                 if (entity.Value.ID == args.ObjectID)
                 {
+                    // We must check that is there any flight with the same coordinates
+                    foreach (var entity2 in airportFlightLists.flights)
+                    {
+                        if (entity2.Value.Longitude == args.Longitude && entity2.Value.Latitude == args.Latitude && entity2.Value.AMSL == args.AMSL)
+                        {
+                            LogToFile($" ERROR - Obkiet w danych współrzednych już istnieje ");
+                            return;
+                        }
+                    }
 
+                    // We write the log to the file and change
+                    LogToFile($"Zaktualizowano pozycję obiektu o ID: {args.ObjectID} - (Longitude: {entity.Value.Longitude}, Latitude: {entity.Value.Latitude}, AMSL: {entity.Value.AMSL})--->(Longitude: {args.Longitude}, Latitude: {args.Latitude}, AMSL: {args.AMSL})");
                     entity.Value.Longitude = args.Longitude;
                     entity.Value.Latitude = args.Latitude;
                     entity.Value.AMSL = args.AMSL;
                     entity.Value.LatitudeStart = args.Latitude;
                     entity.Value.LongitudeStart = args.Longitude;
-                    LogToFile($"Zaktualizowano pozycję obiektu (ID: {args.ObjectID})");
                     return;
                 }
             }
+
+            // If we don't find the object with this id we write the error log
             LogToFile($" ERROR - Nie znaleziono obiektu (ID: {args.ObjectID})");
         }
 
-        private void HandleContactInfoUpdate(object sender, ContactInfoUpdateArgs args)
+        private void HandleContactInfoUpdate(object sender, ContactInfoUpdateArgs args) // Event Handler Method
         {
             foreach (var entity in airportFlightLists.people)
             {
                 if (entity.Value.ID == args.ObjectID)
-                { 
+                {
+                    // We must check that is there any person with the same email or phone
+                    foreach (var entity2 in airportFlightLists.people)
+                    {
+                        if (entity2.Value.Email == args.EmailAddress || entity2.Value.Phone == args.PhoneNumber)
+                        {
+                            LogToFile($" ERROR - Istnieje już człowiek o zadnaym emialu lub numerze telefonu");
+                            return;
+                        }
+                    }
+
+                    // We write the log to the file nad change
+                    LogToFile($"Zaktualizowano dane kontaktowe obiektu o ID: {args.ObjectID} - (Email: {entity.Value.Email}, Phone: {entity.Value.Phone})--->(Email: {args.EmailAddress}, Phone: {args.PhoneNumber}) ");
                     entity.Value.Phone = args.PhoneNumber;
                     entity.Value.Email = args.EmailAddress;
-                    LogToFile($"Zaktualizowano dane kontaktowe obiektu (ID: {args.ObjectID})");
                     return;
                 }
             }
+            // If we don't find the object with this id we write the error log
             LogToFile($" ERROR - Nie znaleziono obiektu (ID: {args.ObjectID})");
         }
         private void ProcessNewData(int messageIndex)
@@ -128,11 +158,11 @@ namespace Project_C_
 
         public void TakeSnapshot()  // Takes a snapshot of the collected entities and saves it to a JSON file.
         {
-            // there we create the fileName
+            // There we create the fileName
             string currentTime = DateTime.Now.ToString("HH_mm_ss");
             string snapshotFileName = $"snapshot_{currentTime}.json";
 
-            // using our serialization methods
+            // Using our serialization methods
             DataSerializer serializer = new MyJsonSerializer();
             string json = serializer.Serialize(entities);
 
@@ -142,7 +172,7 @@ namespace Project_C_
 
         }
 
-        public void GenerateMediaList() // function which generate media list
+        public void GenerateMediaList() // Function which generate media list
         {
             medias.Add(new Televison("Telewizja Abelowa"));
             medias.Add(new Televison("Kanał TV-tensor"));
@@ -155,7 +185,7 @@ namespace Project_C_
 
         }
 
-        public void TakeReport() // function which make a report
+        public void TakeReport() // Function which make a report
         {
             // Construct the newsGenerator object
             Newsgenerator newsgenerator = new Newsgenerator(medias, airportFlightLists.objects);
@@ -168,9 +198,9 @@ namespace Project_C_
                 Console.WriteLine(news);
             }
         }
-        private void LogToFile(string logMessage)
+        public void LogToFile(string logMessage)
         {
-            // Zapisywanie logu do pliku tekstowego
+            // there we write the text to the log file
             using (StreamWriter writer = new StreamWriter(logFilePath, true))
             {
                 writer.WriteLine($"{DateTime.Now.ToString("HH:mm:ss")} - {logMessage}");

@@ -32,7 +32,7 @@ namespace Project_C_
 
                 Thread.Sleep(1);
             }
-            
+
         }
 
         private static void UpdateActualFlightsList(DataSourceService dataSourceService, double currentTime, List<Flight> actualflights)
@@ -46,10 +46,10 @@ namespace Project_C_
                 double startSec = (start - new TimeOnly(0, 0)).TotalSeconds;
                 double endSec = (end - new TimeOnly(0, 0)).TotalSeconds;
 
-                // if take off time is later than landing time we predict that we are landing in next day
+                // If take off time is later than landing time we predict that we are landing in next day
                 if (startSec >= endSec) endSec += 24 * 3600;
 
-                // choose the flights which are actual
+                // Choose the flights which are actual
                 if (endSec <= currentTime)
                 {
                     actualflights.Remove(flight.Value);
@@ -118,11 +118,10 @@ namespace Project_C_
             double totalFlightTime = endSec - startSec;
             double elapsedFlightTime = currentTime - startSec;
             double timeleft = endSec - currentTime;
-            // Calculate the distance of whole filght
-            
-            
+
+            // Calculate the next positions of the plane by Linear inrepolation: https://en.wikipedia.org/wiki/Linear_interpolation
             double latitudeC = (flight.LatitudeStart * timeleft + targetAirport.Latitude * elapsedFlightTime) / totalFlightTime;
-            double LongtitudeC = (flight.LongitudeStart * timeleft + targetAirport.Longitude * elapsedFlightTime)/totalFlightTime;
+            double LongtitudeC = (flight.LongitudeStart * timeleft + targetAirport.Longitude * elapsedFlightTime) / totalFlightTime;
 
             // Update the localization of the plane
             flight.Latitude = (float)(latitudeC);

@@ -23,13 +23,14 @@ namespace Projekt_PO
         public ulong ID { get; set; }
     }
 
-    public abstract class Plane:Myobject {
+    public abstract class Plane : Myobject // Main class, derivatives of this class are CargoPlane and PassengerPlane
+    {
         public string? Serial { get; set; }
         public string? Country { get; set; }
         public string? Model { get; set; }
     };
 
-    public abstract class Human : Myobject
+    public abstract class Human : Myobject // Main class, derivatives of this class are Crew and Passenger 
     {
         public string? Phone { get; set; }
         public string? Email { get; set; }
@@ -47,7 +48,7 @@ namespace Projekt_PO
         public abstract string VisitPassengerPlane(PassengerPlane plane);
     }
 
-    public interface IObjectFactory // interface which define a function creating the objects
+    public interface IObjectFactory // Interface which define a function creating the objects
     {
         Myobject CreateObject(params string[] data);
     }
@@ -57,7 +58,7 @@ namespace Projekt_PO
         Myobject CreateObject(byte[] messageBytes);
     }
 
-    public static class EntityFactory // class which helps us to select the appropriate constructor
+    public static class EntityFactory // Class which helps us to select the appropriate constructor
     {
         public static IObjectFactory GetEntityFactory(string firstElement)
         {
@@ -74,7 +75,7 @@ namespace Projekt_PO
 
             if (factoryMap.TryGetValue(firstElement, out IObjectFactory factory))
             {
-                return factory; // it return facotry class where is constructor call about appropriate class
+                return factory; // It return facotry class where is constructor call about appropriate class
             }
             else
             {
@@ -97,7 +98,7 @@ namespace Projekt_PO
 
             if (factoryMap.TryGetValue(firstElement, out IObjectServerFactory factory))
             {
-                return factory; // it return facotry class where is constructor call about appropriate class
+                return factory; // It return facotry class where is constructor call about appropriate class
             }
             else
             {

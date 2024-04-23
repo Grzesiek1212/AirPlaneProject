@@ -26,36 +26,41 @@ namespace Projekt_PO
     {
         static void Main()
         {
-            // we create a Data Source Object
+            // Take the data from file and make objects
             string currentDirectory = Directory.GetCurrentDirectory();
             string filePath = Path.Combine(currentDirectory, "example_data.ftr");
             string[] lines = File.ReadAllLines(filePath);
-            bool isRunning = true; // this flag tells us if the program is still running
             List<Myobject> objects = new List<Myobject>();
             objects = LoadingData.DataProcesor(lines);
 
+            // Take a path to file to make a change simulator
             string filePath1 = Path.Combine(currentDirectory, "example.ftre");
 
+            // Make a log file
             string currentDate = DateTime.Now.ToString("yyyy-MM-dd");
             string logFileName = $"log_{currentDate}.txt";
             string logFilePath = Path.Combine(currentDirectory, logFileName);
 
-            int minTime = 1; // in milliseconds
-            int maxTime = 5; // in milliseconds
+            int minTime = 1; // In milliseconds
+            int maxTime = 5; // In milliseconds
 
-            // create the server simulator
+            // Create the server simulator
             NetworkSourceSimulator.NetworkSourceSimulator source = new NetworkSourceSimulator.NetworkSourceSimulator(filePath1, minTime, maxTime);
 
-            // we create a source data service object and run the data source
-            DataSourceService dataSourceService = new DataSourceService(source,logFilePath);
+            // We create a source data service object and run the data source
+            DataSourceService dataSourceService = new DataSourceService(source, logFilePath);
             dataSourceService.entities = objects;
+
 
             Thread apka = new Thread(new ThreadStart(Runner.Run));
             apka.Start();
-            
-            Thread mapViewThread = new Thread(() => FlightsVisualization.MapView(dataSourceService, ref isRunning)) { IsBackground = true};
+
+            bool isRunning = true; // This flag tells us if the program is still running
+
+            Thread mapViewThread = new Thread(() => FlightsVisualization.MapView(dataSourceService, ref isRunning)) { IsBackground = true };
             mapViewThread.Start();
 
+            // Make a pause to watch the uploaded changes
             int delayMilliseconds = 2000;
             Task.Delay(delayMilliseconds).Wait();
             dataSourceService.Start();
@@ -77,13 +82,14 @@ namespace Projekt_PO
                         break;
                     case "exit":
                         isRunning = false;
-                        mapViewThread.Join();
                         break;
                     default:
                         Console.WriteLine("Invalid command.");
                         break;
                 }
             }
+
+            dataSourceService.LogToFile("Close Applications\n\n");
             Console.WriteLine("The app has been disabled.");
         }
     }

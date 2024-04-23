@@ -20,7 +20,7 @@ namespace Projekt_PO.Factory
             ushort BusinessClassSize = ushort.Parse(data[6]);
             ushort EconomyClassSize = ushort.Parse(data[7]);
 
-            AirportFlightLists airportFlightLists = AirportFlightLists.Instance;
+            AirportFlightLists airportFlightLists = AirportFlightLists.Instance; // There we use this singleton to add this object
             PassengerPlane plane = new PassengerPlane(id, Serial, Country, Model, FirstClassSize, BusinessClassSize, EconomyClassSize);
             airportFlightLists.AddIreportableObject(plane);
             airportFlightLists.AddPlane(plane);

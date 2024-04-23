@@ -11,8 +11,8 @@ namespace Project_C_
     {
         private List<MyMedia> myMediaList;
         private List<IReportable> myobjectList;
-        private int mediaIndex = 0; // counter of media
-        private int objectIndex = 0; // counter of object
+        private int mediaIndex = 0; // Counter of media
+        private int objectIndex = 0; // Counter of object
 
         public Newsgenerator(List<MyMedia> myMediaList, List<IReportable> myobjectList)
         {

@@ -18,7 +18,7 @@ namespace Projekt_PO.Factory
             string Model = data[4];
             float MaxLoad = float.Parse(data[5], System.Globalization.CultureInfo.InvariantCulture);
 
-            AirportFlightLists airportFlightLists = AirportFlightLists.Instance;
+            AirportFlightLists airportFlightLists = AirportFlightLists.Instance; // There we use this singleton to add this object
             CargoPlane plane = new CargoPlane(id, Serial, Country, Model, MaxLoad);
             airportFlightLists.AddIreportableObject(plane);
             airportFlightLists.AddPlane(plane);

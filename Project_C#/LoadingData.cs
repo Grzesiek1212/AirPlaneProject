@@ -19,10 +19,10 @@ namespace Projekt_PO
 
                 string firstElement = elements[0];
 
-                // we use our fuction to take a appropriate factory
+                // We use our fuction to take a appropriate factory
                 IObjectFactory factory = EntityFactory.GetEntityFactory(firstElement);
 
-                // there we create a object and we add it to our list
+                // There we create a object and we add it to our list
                 Myobject entity = factory.CreateObject(elements);
                 entities.Add(entity);
             }

@@ -20,7 +20,7 @@ namespace Projekt_PO.Factory
             string Class = data[6];
             ulong Miles = ulong.Parse(data[7]);
 
-            AirportFlightLists airportFlightLists = AirportFlightLists.Instance;
+            AirportFlightLists airportFlightLists = AirportFlightLists.Instance; // There we use this singleton to add this object
             Passenger passenger = new Passenger(ID, Name, Age, Phone, Email, Class, Miles);
             airportFlightLists.AddHuman(passenger);
             return passenger;
