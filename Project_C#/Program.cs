@@ -36,6 +36,9 @@ namespace Projekt_PO
 
             string filePath1 = Path.Combine(currentDirectory, "example.ftre");
 
+            string currentDate = DateTime.Now.ToString("yyyy-MM-dd");
+            string logFileName = $"log_{currentDate}.txt";
+            string logFilePath = Path.Combine(currentDirectory, logFileName);
 
             int minTime = 1; // in milliseconds
             int maxTime = 5; // in milliseconds
@@ -44,12 +47,12 @@ namespace Projekt_PO
             NetworkSourceSimulator.NetworkSourceSimulator source = new NetworkSourceSimulator.NetworkSourceSimulator(filePath1, minTime, maxTime);
 
             // we create a source data service object and run the data source
-            DataSourceService dataSourceService = new DataSourceService(source);
+            DataSourceService dataSourceService = new DataSourceService(source,logFilePath);
             dataSourceService.entities = objects;
-
 
             Thread apka = new Thread(new ThreadStart(Runner.Run));
             apka.Start();
+            
             Thread mapViewThread = new Thread(() => FlightsVisualization.MapView(dataSourceService, ref isRunning)) { IsBackground = true};
             mapViewThread.Start();
 
@@ -81,9 +84,7 @@ namespace Projekt_PO
                         break;
                 }
             }
-
             Console.WriteLine("The app has been disabled.");
-
         }
     }
 }

@@ -1,4 +1,5 @@
-﻿using NetworkSourceSimulator;
+﻿using Mapsui.Providers.Wfs.Utilities;
+using NetworkSourceSimulator;
 using Project_C_.Community;
 using Projekt_PO;
 using Projekt_PO.ProjectObjects;
@@ -21,14 +22,15 @@ namespace Project_C_
         public event IDUpdate OnIDUpdate;
         public event PositionUpdate OnPositionUpdate;
         public event ContactInfoUpdate OnContactInfoUpdate;
+        public string logFilePath;
 
-
-        public DataSourceService(NetworkSourceSimulator.NetworkSourceSimulator source) // Class Constructor
+        public DataSourceService(NetworkSourceSimulator.NetworkSourceSimulator source, string logFilePath) // Class Constructor
         {
             this.source = source;
             this.source.OnIDUpdate += HandleIDUpdate;
             this.source.OnPositionUpdate += HandlePositionUpdate;
             this.source.OnContactInfoUpdate += HandleContactInfoUpdate;
+            this.logFilePath = logFilePath;
         }
 
         public void Start() // function that start our program
@@ -56,11 +58,20 @@ namespace Project_C_
             {
                 if (entity.ID == args.ObjectID)
                 {
+                    foreach(var entity2 in entities)
+                    {
+                        if(entity2.ID == args.NewObjectID)
+                        {
+                            LogToFile($" ERROR - Obkiet o ID: {args.ObjectID} już istnieje");
+                            return;
+                        }
+                    }
                     entity.ID = args.NewObjectID;
-                    // Loguj zmianę ID do pliku
-                    break;
+                    LogToFile($"Zaktualizowano ID obiektu: {args.ObjectID} -> {args.NewObjectID}");
+                    return;
                 }
             }
+            LogToFile($" ERROR - Nie znaleziono obiektu (ID: {args.ObjectID})");
         }
 
         private void HandlePositionUpdate(object sender, PositionUpdateArgs args)
@@ -71,15 +82,17 @@ namespace Project_C_
             {
                 if (entity.Value.ID == args.ObjectID)
                 {
+
                     entity.Value.Longitude = args.Longitude;
                     entity.Value.Latitude = args.Latitude;
                     entity.Value.AMSL = args.AMSL;
                     entity.Value.LatitudeStart = args.Latitude;
                     entity.Value.LongitudeStart = args.Longitude;
-                    // Loguj zmianę pozycji do pliku
-                    break;
+                    LogToFile($"Zaktualizowano pozycję obiektu (ID: {args.ObjectID})");
+                    return;
                 }
             }
+            LogToFile($" ERROR - Nie znaleziono obiektu (ID: {args.ObjectID})");
         }
 
         private void HandleContactInfoUpdate(object sender, ContactInfoUpdateArgs args)
@@ -87,13 +100,14 @@ namespace Project_C_
             foreach (var entity in airportFlightLists.people)
             {
                 if (entity.Value.ID == args.ObjectID)
-                {
+                { 
                     entity.Value.Phone = args.PhoneNumber;
                     entity.Value.Email = args.EmailAddress;
-                    // Loguj zmianę danych kontaktowych do pliku
-                    break;
+                    LogToFile($"Zaktualizowano dane kontaktowe obiektu (ID: {args.ObjectID})");
+                    return;
                 }
             }
+            LogToFile($" ERROR - Nie znaleziono obiektu (ID: {args.ObjectID})");
         }
         private void ProcessNewData(int messageIndex)
         {
@@ -152,6 +166,14 @@ namespace Project_C_
             while ((news = newsgenerator.GenerateNextNews()) != null)
             {
                 Console.WriteLine(news);
+            }
+        }
+        private void LogToFile(string logMessage)
+        {
+            // Zapisywanie logu do pliku tekstowego
+            using (StreamWriter writer = new StreamWriter(logFilePath, true))
+            {
+                writer.WriteLine($"{DateTime.Now.ToString("HH:mm:ss")} - {logMessage}");
             }
         }
     }
