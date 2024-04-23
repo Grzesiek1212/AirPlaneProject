@@ -52,7 +52,7 @@ namespace Projekt_PO
             dataSourceService.entities = objects;
 
 
-            Thread apka = new Thread(new ThreadStart(Runner.Run));
+            Thread apka = new Thread(new ThreadStart(Runner.Run)) { IsBackground = true };
             apka.Start();
 
             bool isRunning = true; // This flag tells us if the program is still running
