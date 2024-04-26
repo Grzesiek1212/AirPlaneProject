@@ -49,7 +49,7 @@ namespace Projekt_PO
 
             // We create a source data service object and run the data source
             DataSourceService dataSourceService = new DataSourceService(source, logFilePath);
-            dataSourceService.entities = objects;
+            dataSourceService.airportFlightLists.entities = objects;
 
 
             Thread apka = new Thread(new ThreadStart(Runner.Run)) { IsBackground = true };

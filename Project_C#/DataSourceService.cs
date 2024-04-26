@@ -16,7 +16,6 @@ namespace Project_C_
     public class DataSourceService
     {
         private NetworkSourceSimulator.NetworkSourceSimulator source;
-        public List<Myobject> entities = new List<Myobject>();
         public AirportFlightLists airportFlightLists = AirportFlightLists.Instance;
         public List<MyMedia> medias = new List<MyMedia>();
         public event IDUpdate OnIDUpdate;
@@ -54,12 +53,12 @@ namespace Project_C_
 
         private void HandleIDUpdate(object sender, IDUpdateArgs args) // Event Handler Method
         {
-            foreach (var entity in entities)
+            foreach (var entity in airportFlightLists.entities)
             {
                 if (entity.ID == args.ObjectID)
                 {
                     // We must check that is there any object with the ID for what we want ot change
-                    foreach (var entity2 in entities)
+                    foreach (var entity2 in airportFlightLists.entities)
                     {
                         if (entity2.ID == args.NewObjectID)
                         {
@@ -153,7 +152,7 @@ namespace Project_C_
             // there we create a object and we add it to our list
             Myobject entity = factory.CreateObject(message.MessageBytes);
 
-            entities.Add(entity);
+            airportFlightLists.entities.Add(entity);
         }
 
         public void TakeSnapshot()  // Takes a snapshot of the collected entities and saves it to a JSON file.
@@ -164,7 +163,7 @@ namespace Project_C_
 
             // Using our serialization methods
             DataSerializer serializer = new MyJsonSerializer();
-            string json = serializer.Serialize(entities);
+            string json = serializer.Serialize(airportFlightLists.entities);
 
             // Write our inforamtions
             File.WriteAllText(snapshotFileName, json);

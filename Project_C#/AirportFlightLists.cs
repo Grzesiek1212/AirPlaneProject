@@ -19,6 +19,7 @@ namespace Project_C_
         private static readonly object padlock = new object();
         private static AirportFlightLists instance = null;
 
+        public List<Myobject> entities;
         public ConcurrentDictionary<ulong, Flight> flights;
         public ConcurrentDictionary<ulong, Airport> airports;
         public ConcurrentDictionary<ulong, Plane> planes;
@@ -31,6 +32,7 @@ namespace Project_C_
             airports = new ConcurrentDictionary<ulong, Airport>();
             planes = new ConcurrentDictionary<ulong, Plane>();
             people = new ConcurrentDictionary<ulong, Human>();
+            entities = new List<Myobject>();
             objects = new List<IReportable>();
         }
         public static AirportFlightLists Instance
