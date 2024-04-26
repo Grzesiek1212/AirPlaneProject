@@ -63,20 +63,20 @@ namespace Project_C_
                     {
                         if (entity2.ID == args.NewObjectID)
                         {
-                            LogToFile($" ERROR - Obkiet o ID: {args.ObjectID} już istnieje");
+                            LogToFile($" ERROR - Object with ID: {args.ObjectID} has aleready exists");
                             return;
                         }
                     }
 
                     // We write the log to the file and change
                     entity.ID = args.NewObjectID;
-                    LogToFile($"Zaktualizowano ID obiektu: {args.ObjectID} -> {args.NewObjectID}");
+                    LogToFile($"Update the ID object ID: {args.ObjectID} -> {args.NewObjectID}");
                     return;
                 }
             }
 
             // If we don't find the object with this id we write the error log
-            LogToFile($" ERROR - Nie znaleziono obiektu (ID: {args.ObjectID})");
+            LogToFile($" ERROR - The object with ID: {args.ObjectID} doesn't exist");
         }
 
         private void HandlePositionUpdate(object sender, PositionUpdateArgs args) // Event Handler Method
@@ -93,13 +93,13 @@ namespace Project_C_
                     {
                         if (entity2.Value.Longitude == args.Longitude && entity2.Value.Latitude == args.Latitude && entity2.Value.AMSL == args.AMSL)
                         {
-                            LogToFile($" ERROR - Obkiet w danych współrzednych już istnieje ");
+                            LogToFile($" ERROR - the Object with this co-ordinates exists ");
                             return;
                         }
                     }
 
                     // We write the log to the file and change
-                    LogToFile($"Zaktualizowano pozycję obiektu o ID: {args.ObjectID} - (Longitude: {entity.Value.Longitude}, Latitude: {entity.Value.Latitude}, AMSL: {entity.Value.AMSL})--->(Longitude: {args.Longitude}, Latitude: {args.Latitude}, AMSL: {args.AMSL})");
+                    LogToFile($"Update the position of object with ID: {args.ObjectID} - (Longitude: {entity.Value.Longitude}, Latitude: {entity.Value.Latitude}, AMSL: {entity.Value.AMSL})--->(Longitude: {args.Longitude}, Latitude: {args.Latitude}, AMSL: {args.AMSL})");
                     entity.Value.Longitude = args.Longitude;
                     entity.Value.Latitude = args.Latitude;
                     entity.Value.AMSL = args.AMSL;
@@ -110,7 +110,7 @@ namespace Project_C_
             }
 
             // If we don't find the object with this id we write the error log
-            LogToFile($" ERROR - Nie znaleziono obiektu (ID: {args.ObjectID})");
+            LogToFile($" ERROR - The object with ID: {args.ObjectID} doesn't exists");
         }
 
         private void HandleContactInfoUpdate(object sender, ContactInfoUpdateArgs args) // Event Handler Method
@@ -124,20 +124,20 @@ namespace Project_C_
                     {
                         if (entity2.Value.Email == args.EmailAddress || entity2.Value.Phone == args.PhoneNumber)
                         {
-                            LogToFile($" ERROR - Istnieje już człowiek o zadnaym emialu lub numerze telefonu");
+                            LogToFile($" ERROR - The human with the same email or phone number exists");
                             return;
                         }
                     }
 
                     // We write the log to the file nad change
-                    LogToFile($"Zaktualizowano dane kontaktowe obiektu o ID: {args.ObjectID} - (Email: {entity.Value.Email}, Phone: {entity.Value.Phone})--->(Email: {args.EmailAddress}, Phone: {args.PhoneNumber}) ");
+                    LogToFile($"Update the contact adress of object ID: {args.ObjectID} - (Email: {entity.Value.Email}, Phone: {entity.Value.Phone})--->(Email: {args.EmailAddress}, Phone: {args.PhoneNumber}) ");
                     entity.Value.Phone = args.PhoneNumber;
                     entity.Value.Email = args.EmailAddress;
                     return;
                 }
             }
             // If we don't find the object with this id we write the error log
-            LogToFile($" ERROR - Nie znaleziono obiektu (ID: {args.ObjectID})");
+            LogToFile($" ERROR - The object with ID: {args.ObjectID} doesn't exist");
         }
         private void ProcessNewData(int messageIndex)
         {
@@ -168,7 +168,7 @@ namespace Project_C_
 
             // Write our inforamtions
             File.WriteAllText(snapshotFileName, json);
-            Console.WriteLine($"Snapshot został zapisany do pliku: {snapshotFileName}");
+            Console.WriteLine($"Snapshot has been written to file: {snapshotFileName}");
 
         }
 
@@ -203,7 +203,7 @@ namespace Project_C_
             // there we write the text to the log file
             using (StreamWriter writer = new StreamWriter(logFilePath, true))
             {
-                writer.WriteLine($"{DateTime.Now.ToString("HH:mm:ss")} - {logMessage}");
+                writer.WriteLine($"{DateTime.Now:HH:mm:ss} - {logMessage}");
             }
         }
     }
